@@ -9,25 +9,17 @@ const AjaxHelper = (function() {
     }
 
     async function getBooks(callback) {
-        let options = {
+        const options = {
             method: 'get'
         };
-        await fetch(url, options)
-            .then(function(response) {
-                console.log('first then');
-                console.log(response.headers.get('Content-Type'));
-                console.log(response.status);
-                if (response.status != 200) {
-                    throw new Error(`${response.status}: ${response.statusText}`);
-                }
-                return response.json();
-            })
-            .then(function(json) {
-                console.log('second then');
-                bookArray = json;
-                callback(json);
-            })
-            .catch(console.log);
+        try {
+            const response = await fetch(url, options);
+            const bookArrayResponse = await response.json();
+            bookArray = bookArrayResponse;
+            callback(bookArray);
+        } catch (err) {
+            console.log(err);
+        }
     };
 
     function searchBooks(searchWord, callback = TableBuilder.CreateTable) {
@@ -40,19 +32,17 @@ const AjaxHelper = (function() {
 
     async function deleteBookById(id) {
         if (confirm('Are you sure?')) {
-            let options = {
+            const options = {
                 method: 'delete'
             };
-            let path = parameter + `?id=${id}`;
-            await fetch(path, options)
-                .then(function(response) {
-                    if (response.status != 200) {
-                        throw new Error(`${response.status}: ${response.statusText}`);
-                    }
-                    console.log('delete');
-                    location.reload();
-                })
-                .catch(console.log);
+            const path = url + `?id=${id}`;
+            try {
+                const response = await fetch(path, options);
+                console.log(`Delete's status: ${response.status} ${response.statusText}`);
+                location.reload();
+            } catch (err) {
+                console.log(err);
+            }
         }
     }
 
@@ -61,7 +51,7 @@ const AjaxHelper = (function() {
     }
 
     async function updateBook(book) {
-        let options = {
+        const options = {
             method: 'put',
             headers: {
                 'Content-type': 'application/json'
@@ -69,32 +59,30 @@ const AjaxHelper = (function() {
             body: JSON.stringify(book)
         }
         const path = url + '/' + book.id;
-        await fetch(path, options)
-            .then(function(response) {
-                if (response.status != 200) {
-                    throw new Error(`${response.status}: ${response.statusText}`);
-                }
-            })
-            .catch(alert);
+        try {
+            const response = await fetch(path, options);
+            console.log(`Update's status: ${response.status} ${response.statusText}`);
+            location.reload();
+        } catch (err) {
+            console.log(err);
+        }
     }
 
     async function createBook(book) {
-        let options = {
+        const options = {
             method: 'post',
             headers: {
                 'Content-type': 'application/json'
             },
             body: JSON.stringify(book)
         }
-        await fetch(url, options)
-            .then(function(response) {
-                if (response.status != 200) {
-                    throw new Error(`${response.status}: ${response.statusText}`);
-                } else {
-                    location.reload();
-                }
-            })
-            .catch(console.log);
+        try {
+            const response = await fetch(url, options);
+            console.log(`Create's status: ${response.status} ${response.statusText}`);
+            location.reload();
+        } catch (err) {
+            console.log(err);
+        }
     }
 
     return {
