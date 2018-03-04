@@ -13,6 +13,26 @@ var Models = (function() {
             this.publishingHouse = PublishingHouse;
             this.type = Type;
         }
+
+        [Symbol.iterator]() {
+            var _this = this;
+            var keys = null;
+            var index = 0;
+
+            return {
+                next: function() {
+                    if (keys === null) {
+                        keys = Object.keys(_this).sort();
+                    }
+
+                    return {
+                        value: keys[index],
+                        done: index++ >= keys.length
+                    };
+                }
+            }
+        }
+
         get Id() {
             return this.id;
         };
