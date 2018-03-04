@@ -1,9 +1,9 @@
 "use strict";
 
-var GLOBAL_CONST = (function() {
-    var url = 'http://localhost:2403/books';
-    var audioType = 1;
-    var schoolType = 2;
+const GLOBAL_CONST = (function() {
+    const url = 'http://localhost:2403/books';
+    const audioType = 1;
+    const schoolType = 2;
     return {
         URL: url,
         AUDIO_TYPE: audioType,
