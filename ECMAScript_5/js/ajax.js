@@ -68,7 +68,7 @@ const AjaxHelper = (function() {
             },
             body: JSON.stringify(book)
         }
-        const path = url + '/ff' + book.id;
+        const path = url + '/' + book.id;
         fetch(path, options)
             .then(function(response) {
                 if (response.status != 200) {
