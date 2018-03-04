@@ -1,159 +1,184 @@
 "use strict";
 
 var Models = (function() {
-    function Book(initArray) {
-
-        // property.
-        var _id = initArray.id,
-            _name = initArray.Name,
-            _genre = initArray.Genre,
-            _author = initArray.Author,
-            _isHasCD = initArray.IsHasCD,
-            _isHasDVD = initArray.IsHasDVD,
-            _publishingHouse = initArray.PublishingHouse,
-            _type = initArray.Type;
-
-        this.Type = function() {
-                return _type;
+    class Book {
+        constructor(initArray) {
+            // console.log('tt');
+            // console.log(typeof(initArray));
+            // console.log(typeof([initArray]));
+            // console.log(typeof([1, '2']));
+            console.log(initArray);
+            for (var value of initArray) {
+                console.log(value);
             }
-            // id get.
-        this.Id = function() {
-                return _id;
-            }
-            // name get/set.
-        this.Name = function(name) {
-            if (!arguments.length) return _name;
+            let [id, name, genre, author, isHasCD, isHasDVD, publishingHouse, type] = initArray;
+            this.id = id;
+            this.name = name;
+            this.genre = genre;
+            this.author = author;
+            this.isHasCD = isHasCD;
+            this.isHasDVD = isHasDVD;
+            this.publishingHouse = publishingHouse;
+            this.type = type;
+        }
+        get Id() {
+            return this.id;
+        };
 
+        get Type() {
+            return this.type;
+        };
+        // name get/set.
+        get Name() {
+            return this.name;
+        };
+        set Name(name) {
             if (typeof(name) == "string") {
-                _name = name;
+                this.name = name;
             } else {
                 throw "Variable isn't a string";
             }
         };
         // genre get/set.
-        this.Genre = function(genre) {
-            if (!arguments.length) return _genre;
-
+        get Genre() {
+            return this.genre;
+        };
+        set Genre(genre) {
             if (typeof(genre) == "string") {
-                _genre = genre;
+                this.genre = genre;
             } else {
                 throw "Variable isn't a string";
             }
         };
         // author get/set.
-        this.Author = function(author) {
-            if (!arguments.length) return _author;
-
+        get Author() {
+            return this.author;
+        };
+        set Author(author) {
             if (typeof(author) == "string") {
-                _author = author;
+                this.author = author;
             } else {
                 throw "Variable isn't a string";
             }
         };
         // isHasCd get/set.
-        this.IsHasCD = function(isHas) {
-            if (!arguments.length) return _isHasCD;
-
+        get IsHasCD() {
+            return this.isHasCD;
+        };
+        set IsHasCD(isHas) {
             if (typeof(isHas) == "boolean") {
-                _isHasCD = isHas;
+                this.isHasCD = isHas;
             } else {
-                if (isHas == 1) _isHasCD = true;
-                if (isHas == 0) _isHasCD = false;
+                if (isHas == 1) this.isHasCD = true;
+                if (isHas == 0) this.isHasCD = false;
                 throw "Variable isn't a boolean";
             }
         };
         // isHasDVD get/set.
-        this.IsHasDVD = function(isHas) {
-            if (!arguments.length) return _isHasDVD;
-
+        get IsHasDVD() {
+            return this.isHasDVD;
+        };
+        set IsHasDVD(isHas) {
             if (typeof(isHas) == "boolean") {
-                _isHasDVD = isHas;
+                this.isHasDVD = isHas;
             } else {
-                if (isHas == 1) _isHasDVD = true;
-                if (isHas == 0) _isHasDVD = false;
+                if (isHas == 1) this.isHasDVD = true;
+                if (isHas == 0) this.isHasDVD = false;
                 throw "Variable isn't a boolean";
             }
         };
         // publishingHouse get/set.
-        this.PublishingHouse = function(publishingHouse) {
-            if (!arguments.length) return _publishingHouse;
-
+        get PublishingHouse() {
+            return this.publishingHouse;
+        }
+        set PublishingHouse(publishingHouse) {
             if (typeof(publishingHouse) == "string") {
-                _publishingHouse = publishingHouse;
+                this.publishingHouse = publishingHouse;
             } else {
                 throw "Variable isn't a string";
             }
         };
 
-    };
-    Book.prototype.GetInfo = function() {
-        return this.Name() + ' ' +
-            this.Genre() + ' ' +
-            this.Author() + ' ' +
-            this.IsHasCD() + ' ' +
-            this.IsHasDVD() + ' ' +
-            this.PublishingHouse();
+        GetInfo() {
+            return this.Name + ' ' +
+                this.Genre + ' ' +
+                this.Author + ' ' +
+                this.IsHasCD + ' ' +
+                this.IsHasDVD + ' ' +
+                this.PublishingHouse;
+        }
     }
 
-    function AudioBook(initArray) {
-        Book.apply(this, arguments);
-        var _duration = initArray.Duration,
-            _size = initArray.Size;
+    class AudioBook extends Book {
+        constructor(initArray) {
+            // console.log('ausio');
+            // console.log(initArray);
+            super(initArray);
+            this.duration = initArray.Duration;
+            this.size = initArray.Size;
+        };
 
         // duration get/set
-        this.Duration = function(duration) {
-                if (!arguments.length) return _duration;
-
-                if (typeof(duration) == "number") {
-                    _duration = duration;
-                } else {
-                    throw "Variable isn't a number";
-                }
+        get Duration() {
+            return this.duration;
+        };
+        set Duration(duration) {
+            if (typeof(duration) == "number") {
+                this.duration = duration;
+            } else {
+                throw "Variable isn't a number";
             }
-            // size get/set
-        this.Size = function(size) {
-            if (!arguments.length) return _size;
-
+        };
+        // size get/set
+        get Size() {
+            return this.size;
+        };
+        set Size(size) {
             if (typeof(size) == "number") {
                 _size = size;
             } else {
                 throw "Variable isn't a number";
             }
+        };
+
+        GetInfo() {
+            return super.GetInfo() + ' ' + this.Duration() + ' ' + this.Size();
         }
     };
-    AudioBook.prototype.GetInfo = function() {
-        return Book.prototype.GetInfo.apply(this, arguments) + ' ' + this.Duration() + ' ' + this.Size();
-    }
 
-    function SchoolBook(initArray) {
-        Book.apply(this, arguments);
-        var _pageCount = initArray.PageCount,
-            _coverType = initArray.CoverType;
+    class SchoolBook extends Book {
+        constructor(initArray) {
+            super(initArray);
+            this.pageCount = initArray.PageCount;
+            this.coverType = initArray.CoverType;
+        };
 
         // pageCount get/set.
-        this.PageCount = function(pageCount) {
-                if (!arguments.length) return _pageCount;
-
-                if (typeof(pageCount) == "number") {
-                    _pageCount = pageCount;
-                } else {
-                    throw "Variable isn't a number";
-                }
+        get PageCount() {
+            return this.pageCount;
+        };
+        set PageCount(pageCount) {
+            if (typeof(pageCount) == "number") {
+                this.pageCount = pageCount;
+            } else {
+                throw "Variable isn't a number";
             }
-            // coverType get/set.
-        this.CoverType = function(coverType) {
-            if (!arguments.length) return _coverType;
-
+        };
+        // coverType get/set.
+        get CoverType() {
+            return this.coverType;
+        }
+        set CoverType(coverType) {
             if (typeof(publishingHouse) == "string") {
-                _coverType = coverType;
+                this.coverType = coverType;
             } else {
                 throw "Variable isn't a string";
             }
         }
+        GetInfo() {
+            return super.GetInfo() + ' ' + this.PageCount() + ' ' + this.CoverType();
+        }
     };
-    SchoolBook.prototype.GetInfo = function() {
-        return Book.prototype.GetInfo.apply(this, arguments) + ' ' + this.PageCount() + ' ' + this.CoverType();
-    }
     return {
         CreateBook: function(book) {
             return new Book(book);

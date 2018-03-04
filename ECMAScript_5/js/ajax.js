@@ -34,11 +34,14 @@ var AjaxHelper = (function() {
     }
 
     function getInfoById(id) {
-        for (var index = 0; index < bookArray.length; index++) {
-            if (bookArray[index].id == id) {
-                return bookArray[index];
-            }
+        var t = bookArray.find(x => x.id == id);
+        var tt = [];
+        for (var index in t) {
+            tt.push(t[index]);
+            console.log(tt[index]);
         }
+        //console.log([t]);
+        return tt;
     }
 
     function updateBook(book) {
@@ -71,9 +74,6 @@ var AjaxHelper = (function() {
 
     function listener(response, callback) {
         bookArray = JSON.parse(oReq.responseText);
-        // for (var i = 0; i < bookFromServer.length; i++) {
-        //     bookArray.push(Models.CreateBook(bookFromServer[i]));
-        // }
         callback(bookArray);
     }
 

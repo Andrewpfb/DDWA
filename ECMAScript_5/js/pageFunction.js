@@ -5,6 +5,7 @@ var PageFunction = (function() {
 
     function initPage() {
         AjaxHelper.InitAjax(GLOBAL_CONST.URL);
+        TableBuilder.InitTableBuilder('tableForm');
         document.getElementById('bookForm').onsubmit = function(event) {
             event.preventDefault();
             event.stopImmediatePropagation();

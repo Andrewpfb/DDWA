@@ -1,8 +1,13 @@
 "use strict";
 
 var TableBuilder = (function() {
+    var divId;
     var bookTableObj = document.createElement('table');
     var detailTableObj = document.createElement('table');
+
+    function initTableBuilder(containerId) {
+        divId = containerId;
+    }
 
     function buildBooksTable(array) {
         bookTableObj.setAttribute('border', '1');
@@ -22,7 +27,8 @@ var TableBuilder = (function() {
             '<td>' + '' + 'Info' + '</td>' +
             '<td>' + '' + 'Edit' + '</td>' +
             '</tr></thead>';
-
+        console.log('table');
+        console.log(array);
         for (var i = 0; i < array.length; i++) {
             tableHTML += '<tr>' +
                 '<td>' + array[i].Name + '</td>' +
@@ -37,7 +43,8 @@ var TableBuilder = (function() {
                 '</tr>';
         }
         bookTableObj.innerHTML = tableHTML;
-        document.body.appendChild(bookTableObj);
+        document.getElementById(divId).appendChild(bookTableObj);
+        //document.body.appendChild(bookTableObj);
     }
 
     function buildDetailTable(book) {
@@ -50,10 +57,14 @@ var TableBuilder = (function() {
             }
         }
         detailTableObj.innerHTML = tableHTML;
-        document.body.appendChild(detailTableObj);
+        document.getElementById(divId).appendChild(detailTableObj);
+        //document.body.appendChild(detailTableObj);
     }
 
     return {
+        InitTableBuilder: function(containerId) {
+            initTableBuilder(containerId);
+        },
         CreateTable: function(bookArray) {
             buildBooksTable(bookArray);
         },
