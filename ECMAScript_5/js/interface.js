@@ -31,3 +31,12 @@ function Search() {
 function LoadData() {
     PageFunction.InitPage();
 };
+
+if (!!window.Worker) {
+    var worker = new Worker('./js/worker.js');
+    worker.postMessage('Hellow World');
+    worker.onmessage = function(e) {
+        document.getElementById('count').value = e.data;
+        console.log(e.data);
+    };
+}
