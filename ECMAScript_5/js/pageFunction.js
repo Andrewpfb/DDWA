@@ -1,7 +1,7 @@
 "use strict";
 
 var PageFunction = (function() {
-    var isEdit = false;
+    let isEdit = false;
 
     function initPage() {
         AjaxHelper.InitAjax(GLOBAL_CONST.URL);
@@ -13,7 +13,7 @@ var PageFunction = (function() {
         }
         var callback = TableBuilder.CreateTable;
         AjaxHelper.GetBooks(callback);
-    }
+    };
 
     function getInfo(id) {
         var book = AjaxHelper.GetBookInfoById(id);
@@ -99,12 +99,17 @@ var PageFunction = (function() {
         var select = document.getElementById('selectTypeBook');
         var selectOption = select.options[select.selectedIndex];
         return selectOption.value;
-    }
+    };
 
     function setSelectValue(value) {
         var select = document.getElementById('selectTypeBook');
         var selectOption = select.options[value - 1].selected = true;
         changeBookTypeByForm();
+    };
+
+    function search() {
+        let searchWord = document.getElementById('searchField').value;
+        AjaxHelper.SearchBooks(searchWord);
     }
 
     return {
@@ -128,6 +133,9 @@ var PageFunction = (function() {
         },
         ChangeBookTypeByForm: function() {
             changeBookTypeByForm();
+        },
+        Search: function() {
+            search();
         }
     }
 })();

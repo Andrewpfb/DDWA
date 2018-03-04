@@ -18,8 +18,8 @@ var TableBuilder = (function() {
 
         tableHTML +=
             '<td>' + 'Name' + '</td>' +
-            '<td>' + 'Genre' + '</td>' +
             '<td>' + 'Author' + '</td>' +
+            '<td>' + 'Genre' + '</td>' +
             '<td>' + 'IsHasCD' + '</td>' +
             '<td>' + 'IsHasDVD' + '</td>' +
             '<td>' + 'PublishingHouse' + '</td>' +
@@ -27,8 +27,6 @@ var TableBuilder = (function() {
             '<td>' + '' + 'Info' + '</td>' +
             '<td>' + '' + 'Edit' + '</td>' +
             '</tr></thead>';
-        console.log('table');
-        console.log(array);
         for (var i = 0; i < array.length; i++) {
             tableHTML += '<tr>' +
                 '<td>' + array[i].Name + '</td>' +
@@ -44,21 +42,31 @@ var TableBuilder = (function() {
         }
         bookTableObj.innerHTML = tableHTML;
         document.getElementById(divId).appendChild(bookTableObj);
-        //document.body.appendChild(bookTableObj);
     }
 
     function buildDetailTable(book) {
+        console.log(book.GetInfo());
         detailTableObj.setAttribute('border', '1');
         detailTableObj.setAttribute('id', 'DetailTable');
-        var tableHTML = '<caption>Detail</caption><thead><tr>';
-        for (var key = 2; key < 10; key++) {
-            if (Object.keys(book)[key] == 'Type') {} else {
-                tableHTML += '<td>' + Object.keys(book)[key] + '</td><td>' + book[Object.keys(book)[key]]() + '</td></tr>';
-            }
+        var tableHTML = '<caption>Detail</caption>';
+        tableHTML += '<thead>' +
+            '<tr><td>' + 'Name' + '</td><td>' + book.Name + '</td></tr>' +
+            '<tr><td>' + 'Genre' + '</td><td>' + book.Genre + '</td></tr>' +
+            '<tr><td>' + 'Author' + '</td><td>' + book.Author + '</td></tr>' +
+            '<tr><td>' + 'CD' + '</td><td>' + book.IsHasCD + '</td></tr>' +
+            '<tr><td>' + 'DVD' + '</td><td>' + book.IsHasDVD + '</td></tr>' +
+            '<tr><td>' + 'Publishing House' + '</td><td>' + book.PublishingHouse + '</td></tr>';
+        if (book.Type == GLOBAL_CONST.AUDIO_TYPE) {
+            tableHTML +=
+                '<tr><td>' + 'Duration' + '</td><td>' + book.Duration + '</td></tr>' +
+                '<tr><td>' + 'Size' + '</td><td>' + book.Size + '</td></tr>';
+        } else if (book.Type == GLOBAL_CONST.SCHOOL_TYPE) {
+            tableHTML +=
+                '<tr><td>' + 'Page count' + '</td><td>' + book.PageCount + '</td></tr>' +
+                '<tr><td>' + 'Cover type' + '</td><td>' + book.CoverType + '</td></tr>';
         }
         detailTableObj.innerHTML = tableHTML;
         document.getElementById(divId).appendChild(detailTableObj);
-        //document.body.appendChild(detailTableObj);
     }
 
     return {

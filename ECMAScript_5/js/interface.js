@@ -24,7 +24,10 @@ function ChangeCreateBookType() {
     PageFunction.ChangeBookTypeByForm();
 }
 
+function Search() {
+    PageFunction.Search();
+}
+
 function LoadData() {
-    var t = Models.CreateBook([1, 'name', 'genre', 'author', true, false, 'pb', 1]);
     PageFunction.InitPage();
 };

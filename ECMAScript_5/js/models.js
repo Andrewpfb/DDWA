@@ -3,23 +3,15 @@
 var Models = (function() {
     class Book {
         constructor(initArray) {
-            // console.log('tt');
-            // console.log(typeof(initArray));
-            // console.log(typeof([initArray]));
-            // console.log(typeof([1, '2']));
-            console.log(initArray);
-            for (var value of initArray) {
-                console.log(value);
-            }
-            let [id, name, genre, author, isHasCD, isHasDVD, publishingHouse, type] = initArray;
+            let { id, Name, Genre, Author, IsHasCD, IsHasDVD, PublishingHouse, Type } = initArray;
             this.id = id;
-            this.name = name;
-            this.genre = genre;
-            this.author = author;
-            this.isHasCD = isHasCD;
-            this.isHasDVD = isHasDVD;
-            this.publishingHouse = publishingHouse;
-            this.type = type;
+            this.name = Name;
+            this.genre = Genre;
+            this.author = Author;
+            this.isHasCD = IsHasCD;
+            this.isHasDVD = IsHasDVD;
+            this.publishingHouse = PublishingHouse;
+            this.type = Type;
         }
         get Id() {
             return this.id;
@@ -100,19 +92,18 @@ var Models = (function() {
         };
 
         GetInfo() {
-            return this.Name + ' ' +
-                this.Genre + ' ' +
-                this.Author + ' ' +
-                this.IsHasCD + ' ' +
-                this.IsHasDVD + ' ' +
-                this.PublishingHouse;
+            return `
+            Name: ${this.Name} 
+            Genre: ${this.Genre}
+            Author: ${this.Author} 
+            CD: ${this.IsHasCD} 
+            DVD: ${this.IsHasDVD} 
+            Publishing house: ${this.PublishingHouse}`;
         }
     }
 
     class AudioBook extends Book {
         constructor(initArray) {
-            // console.log('ausio');
-            // console.log(initArray);
             super(initArray);
             this.duration = initArray.Duration;
             this.size = initArray.Size;
@@ -142,7 +133,9 @@ var Models = (function() {
         };
 
         GetInfo() {
-            return super.GetInfo() + ' ' + this.Duration() + ' ' + this.Size();
+            return `${super.GetInfo()} 
+            Duration: ${this.Duration} 
+            Size: ${this.Size}`;
         }
     };
 
@@ -176,7 +169,9 @@ var Models = (function() {
             }
         }
         GetInfo() {
-            return super.GetInfo() + ' ' + this.PageCount() + ' ' + this.CoverType();
+            return `${super.GetInfo()}
+            Page count: ${this.PageCount} 
+            Cover type: ${this.CoverType}`;
         }
     };
     return {

@@ -24,6 +24,14 @@ var AjaxHelper = (function() {
         }
     }
 
+    function searchBooks(searchWord, callback = TableBuilder.CreateTable) {
+        callback(bookArray.filter(
+            s =>
+            s.Name == searchWord ||
+            s.Genre == searchWord ||
+            s.Author == searchWord));
+    }
+
     function deleteBookById(id) {
         if (confirm('Are you sure?')) {
             oReq.onload = listenerDelete;
@@ -34,14 +42,7 @@ var AjaxHelper = (function() {
     }
 
     function getInfoById(id) {
-        var t = bookArray.find(x => x.id == id);
-        var tt = [];
-        for (var index in t) {
-            tt.push(t[index]);
-            console.log(tt[index]);
-        }
-        //console.log([t]);
-        return tt;
+        return bookArray.find(x => x.id == id);
     }
 
     function updateBook(book) {
@@ -100,6 +101,9 @@ var AjaxHelper = (function() {
         },
         CreateBook: function(book) {
             createBook(book);
+        },
+        SearchBooks: function(searchWord, callback) {
+            searchBooks(searchWord, callback);
         }
     }
 })();
