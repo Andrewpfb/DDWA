@@ -8,11 +8,11 @@ const AjaxHelper = (function() {
         bookArray = [];
     }
 
-    function getBooks(callback) {
+    async function getBooks(callback) {
         let options = {
             method: 'get'
         };
-        fetch(url, options)
+        await fetch(url, options)
             .then(function(response) {
                 console.log('first then');
                 console.log(response.headers.get('Content-Type'));
@@ -38,13 +38,13 @@ const AjaxHelper = (function() {
             s.Author == searchWord));
     }
 
-    function deleteBookById(id) {
+    async function deleteBookById(id) {
         if (confirm('Are you sure?')) {
             let options = {
                 method: 'delete'
             };
             let path = parameter + `?id=${id}`;
-            fetch(path, options)
+            await fetch(path, options)
                 .then(function(response) {
                     if (response.status != 200) {
                         throw new Error(`${response.status}: ${response.statusText}`);
@@ -60,7 +60,7 @@ const AjaxHelper = (function() {
         return bookArray.find(x => x.id == id);
     }
 
-    function updateBook(book) {
+    async function updateBook(book) {
         let options = {
             method: 'put',
             headers: {
@@ -68,17 +68,17 @@ const AjaxHelper = (function() {
             },
             body: JSON.stringify(book)
         }
-        const path = url + '/ff' + book.id;
-        fetch(path, options)
+        const path = url + '/' + book.id;
+        await fetch(path, options)
             .then(function(response) {
                 if (response.status != 200) {
                     throw new Error(`${response.status}: ${response.statusText}`);
                 }
             })
-            .catch(console.log);
+            .catch(alert);
     }
 
-    function createBook(book) {
+    async function createBook(book) {
         let options = {
             method: 'post',
             headers: {
@@ -86,7 +86,7 @@ const AjaxHelper = (function() {
             },
             body: JSON.stringify(book)
         }
-        fetch(url, options)
+        await fetch(url, options)
             .then(function(response) {
                 if (response.status != 200) {
                     throw new Error(`${response.status}: ${response.statusText}`);
