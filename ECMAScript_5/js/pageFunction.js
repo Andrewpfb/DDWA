@@ -1,7 +1,8 @@
 "use strict";
 
-var PageFunction = (function() {
+const PageFunction = (function() {
     let isEdit = false;
+    let select;
 
     function initPage() {
         AjaxHelper.InitAjax(GLOBAL_CONST.URL);
@@ -11,12 +12,13 @@ var PageFunction = (function() {
             event.stopImmediatePropagation();
             saveBook();
         }
-        var callback = TableBuilder.CreateTable;
+        select = document.getElementById('selectTypeBook');
+        const callback = TableBuilder.CreateTable;
         AjaxHelper.GetBooks(callback);
     };
 
     function getInfo(id) {
-        var book = AjaxHelper.GetBookInfoById(id);
+        const book = AjaxHelper.GetBookInfoById(id);
         if (book) {
             if (book.Type == GLOBAL_CONST.AUDIO_TYPE) {
                 TableBuilder.CreateDetailTable(Models.CreateAudioBook(book));
@@ -24,7 +26,7 @@ var PageFunction = (function() {
                 TableBuilder.CreateDetailTable(Models.CreateSchoolBook(book));
             }
         } else {
-            console.log("Book doesn't find");
+            console.log(`Book doesn't find`);
         }
     };
 
@@ -33,7 +35,7 @@ var PageFunction = (function() {
     };
 
     function editBook(id) {
-        var book = AjaxHelper.GetBookInfoById(id);
+        const book = AjaxHelper.GetBookInfoById(id);
         if (book) {
             isEdit = true;
             setSelectValue(book.Type);
@@ -50,12 +52,12 @@ var PageFunction = (function() {
             document.getElementById('bookCoverType').value = book.CoverType;
             showCreateForm();
         } else {
-            console.log('Error, book not found');
+            console.log(`Error, book doesn't found`);
         }
     };
 
     function saveBook() {
-        var book = {
+        let book = {
             Type: getSelectedType(),
             Name: document.getElementById('bookName').value,
             Author: document.getElementById('bookAuthor').value,
@@ -96,14 +98,12 @@ var PageFunction = (function() {
     };
 
     function getSelectedType() {
-        var select = document.getElementById('selectTypeBook');
-        var selectOption = select.options[select.selectedIndex];
+        const selectOption = select.options[select.selectedIndex];
         return selectOption.value;
     };
 
     function setSelectValue(value) {
-        var select = document.getElementById('selectTypeBook');
-        var selectOption = select.options[value - 1].selected = true;
+        const selectOption = select.options[value - 1].selected = true;
         changeBookTypeByForm();
     };
 

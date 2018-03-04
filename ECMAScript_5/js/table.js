@@ -1,9 +1,9 @@
 "use strict";
 
-var TableBuilder = (function() {
-    var divId;
-    var bookTableObj = document.createElement('table');
-    var detailTableObj = document.createElement('table');
+const TableBuilder = (function() {
+    let divId;
+    const bookTableObj = document.createElement('table');
+    const detailTableObj = document.createElement('table');
 
     function initTableBuilder(containerId) {
         divId = containerId;
@@ -14,7 +14,7 @@ var TableBuilder = (function() {
 
         bookTableObj.setAttribute('id', 'BooksTable');
 
-        var tableHTML = '<caption>Books</caption><thead><tr>';
+        let tableHTML = '<caption>Books</caption><thead><tr>';
 
         tableHTML += `
         <td> Name </td>
@@ -27,7 +27,7 @@ var TableBuilder = (function() {
         <td> Info </td>
         <td> Edit </td>
         </tr></thead>`;
-        for (var i = 0; i < array.length; i++) {
+        for (let i = 0; i < array.length; i++) {
             tableHTML += `<tr>
                 <td> ${array[i].Name}</td>
                 <td> ${array[i].Author}</td>
@@ -37,7 +37,7 @@ var TableBuilder = (function() {
                 <td> ${array[i].PublishingHouse}</td>
                 <td><button onclick="Delete('${array[i].id}')">Delete</button></td>
                 <td><button onclick="Info('${array[i].id}')">Info</button></td>
-                <td><button onclick="Edit('${array[i].id} ')">Edit</button></td>
+                <td><button onclick="Edit('${array[i].id}')">Edit</button></td>
                 </tr>`;
         }
         bookTableObj.innerHTML = tableHTML;
@@ -45,31 +45,14 @@ var TableBuilder = (function() {
     }
 
     function buildDetailTable(book) {
-        console.log(book.GetInfo());
+        let proxy = Models.ProxyExample(book);
+        console.log(proxy.GetInfo());
         detailTableObj.setAttribute('border', '1');
         detailTableObj.setAttribute('id', 'DetailTable');
-        var tableHTML = '<caption>Detail</caption>';
-        // tableHTML += '<thead>' +
-        //     '<tr><td>' + 'Name' + '</td><td>' + book.Name + '</td></tr>' +
-        //     '<tr><td>' + 'Genre' + '</td><td>' + book.Genre + '</td></tr>' +
-        //     '<tr><td>' + 'Author' + '</td><td>' + book.Author + '</td></tr>' +
-        //     '<tr><td>' + 'CD' + '</td><td>' + book.IsHasCD + '</td></tr>' +
-        //     '<tr><td>' + 'DVD' + '</td><td>' + book.IsHasDVD + '</td></tr>' +
-        //     '<tr><td>' + 'Publishing House' + '</td><td>' + book.PublishingHouse + '</td></tr>';
-        // if (book.Type == GLOBAL_CONST.AUDIO_TYPE) {
-        //     tableHTML +=
-        //         '<tr><td>' + 'Duration' + '</td><td>' + book.Duration + '</td></tr>' +
-        //         '<tr><td>' + 'Size' + '</td><td>' + book.Size + '</td></tr>';
-        // } else if (book.Type == GLOBAL_CONST.SCHOOL_TYPE) {
-        //     tableHTML +=
-        //         '<tr><td>' + 'Page count' + '</td><td>' + book.PageCount + '</td></tr>' +
-        //         '<tr><td>' + 'Cover type' + '</td><td>' + book.CoverType + '</td></tr>';
-        // }
-        for (var key in book) {
-            if (key == 'id' || key == 'type') {
-
-            } else {
-                tableHTML += `<tr><td>${key}</td><td>${book[key]}</td></tr>`;
+        let tableHTML = '<caption>Detail</caption>';
+        for (let key in proxy) {
+            if (key == 'id' || key == 'type') {} else {
+                tableHTML += `<tr><td>${key}</td><td>${proxy[key]}</td></tr>`;
             }
         }
         detailTableObj.innerHTML = tableHTML;

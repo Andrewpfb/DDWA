@@ -1,6 +1,6 @@
 "use strict";
 
-var Models = (function() {
+const Models = (function() {
     class Book {
         constructor(initArray) {
             let { id, Name, Genre, Author, IsHasCD, IsHasDVD, PublishingHouse, Type } = initArray;
@@ -15,9 +15,9 @@ var Models = (function() {
         }
 
         [Symbol.iterator]() {
-            var _this = this;
-            var keys = null;
-            var index = 0;
+            let _this = this;
+            let keys = null;
+            let index = 0;
 
             return {
                 next: function() {
@@ -48,7 +48,7 @@ var Models = (function() {
             if (typeof(name) == "string") {
                 this.name = name;
             } else {
-                throw "Variable isn't a string";
+                throw `Variable isn't a string`;
             }
         };
         // genre get/set.
@@ -59,7 +59,7 @@ var Models = (function() {
             if (typeof(genre) == "string") {
                 this.genre = genre;
             } else {
-                throw "Variable isn't a string";
+                throw `Variable isn't a string`;
             }
         };
         // author get/set.
@@ -70,7 +70,7 @@ var Models = (function() {
             if (typeof(author) == "string") {
                 this.author = author;
             } else {
-                throw "Variable isn't a string";
+                throw `Variable isn't a string`;
             }
         };
         // isHasCd get/set.
@@ -83,7 +83,7 @@ var Models = (function() {
             } else {
                 if (isHas == 1) this.isHasCD = true;
                 if (isHas == 0) this.isHasCD = false;
-                throw "Variable isn't a boolean";
+                throw `Variable isn't a boolean`;
             }
         };
         // isHasDVD get/set.
@@ -96,7 +96,7 @@ var Models = (function() {
             } else {
                 if (isHas == 1) this.isHasDVD = true;
                 if (isHas == 0) this.isHasDVD = false;
-                throw "Variable isn't a boolean";
+                throw `Variable isn't a boolean`;
             }
         };
         // publishingHouse get/set.
@@ -107,7 +107,7 @@ var Models = (function() {
             if (typeof(publishingHouse) == "string") {
                 this.publishingHouse = publishingHouse;
             } else {
-                throw "Variable isn't a string";
+                throw `Variable isn't a string`;
             }
         };
 
@@ -137,7 +137,7 @@ var Models = (function() {
             if (typeof(duration) == "number") {
                 this.duration = duration;
             } else {
-                throw "Variable isn't a number";
+                throw `Variable isn't a number`;
             }
         };
         // size get/set
@@ -148,12 +148,13 @@ var Models = (function() {
             if (typeof(size) == "number") {
                 _size = size;
             } else {
-                throw "Variable isn't a number";
+                throw `Variable isn't a number`;
             }
         };
 
         GetInfo() {
-            return `${super.GetInfo()} 
+            return `
+            ${super.GetInfo()} 
             Duration: ${this.Duration} 
             Size: ${this.Size}`;
         }
@@ -174,7 +175,7 @@ var Models = (function() {
             if (typeof(pageCount) == "number") {
                 this.pageCount = pageCount;
             } else {
-                throw "Variable isn't a number";
+                throw `Variable isn't a number`;
             }
         };
         // coverType get/set.
@@ -185,19 +186,17 @@ var Models = (function() {
             if (typeof(publishingHouse) == "string") {
                 this.coverType = coverType;
             } else {
-                throw "Variable isn't a string";
+                throw `Variable isn't a string`;
             }
         }
         GetInfo() {
-            return `${super.GetInfo()}
+            return `
+            ${super.GetInfo()}
             Page count: ${this.PageCount} 
             Cover type: ${this.CoverType}`;
         }
     };
     return {
-        CreateBook: function(book) {
-            return new Book(book);
-        },
         CreateAudioBook: function(book) {
             return new AudioBook(book);
         },
@@ -206,6 +205,14 @@ var Models = (function() {
         },
         GetInfoByBook: function(book) {
             return book.GetInfo();
+        },
+        ProxyExample: function(book) {
+            return new Proxy(book, {
+                get(target, prop) {
+                    console.log(`Read ${prop}`);
+                    return target[prop];
+                }
+            })
         }
     }
 })();

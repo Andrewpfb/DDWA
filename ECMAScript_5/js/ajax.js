@@ -1,28 +1,34 @@
 "use strict";
 
-var AjaxHelper = (function() {
-    var url, oReq, bookArray;
+const AjaxHelper = (function() {
+    let url, bookArray;
 
     function initAjax(initUrl) {
         url = initUrl;
-        oReq = new XMLHttpRequest();
         bookArray = [];
     }
 
     function getBooks(callback) {
-        oReq.open('get', url, true);
-        oReq.send();
-        oReq.onreadystatechange = function() {
-            if (oReq.readyState != 4) {
-                return
-            }
-            if (oReq.status != 200) {
-                console.log('Error: ' + oReq.status + ':' + oReq.statusText);
-            } else {
-                listener(oReq.response, callback);
-            }
-        }
-    }
+        let options = {
+            method: 'get'
+        };
+        fetch(url, options)
+            .then(function(response) {
+                console.log('first then');
+                console.log(response.headers.get('Content-Type'));
+                console.log(response.status);
+                if (response.status != 200) {
+                    throw new Error(`${response.status}: ${response.statusText}`);
+                }
+                return response.json();
+            })
+            .then(function(json) {
+                console.log('second then');
+                bookArray = json;
+                callback(json);
+            })
+            .catch(console.log);
+    };
 
     function searchBooks(searchWord, callback = TableBuilder.CreateTable) {
         callback(bookArray.filter(
@@ -34,10 +40,19 @@ var AjaxHelper = (function() {
 
     function deleteBookById(id) {
         if (confirm('Are you sure?')) {
-            oReq.onload = listenerDelete;
-            var parameter = '?id=' + id;
-            oReq.open("delete", url + parameter, true);
-            oReq.send();
+            let options = {
+                method: 'delete'
+            };
+            let path = parameter + `?id=${id}`;
+            fetch(path, options)
+                .then(function(response) {
+                    if (response.status != 200) {
+                        throw new Error(`${response.status}: ${response.statusText}`);
+                    }
+                    console.log('delete');
+                    location.reload();
+                })
+                .catch(console.log);
         }
     }
 
@@ -46,41 +61,40 @@ var AjaxHelper = (function() {
     }
 
     function updateBook(book) {
-        oReq.open('put', url + '/' + book.id, true);
-        oReq.setRequestHeader('Content-type', 'application/json');
-        oReq.send(JSON.stringify(book));
-        oReq.onreadystatechange = function() {
-            if (oReq.readyState == 4) {
-                if (oReq.status != 200) {
-                    console.log('Error: ' + oReq.status + ':' + oReq.statusText);
-                }
-            }
+        let options = {
+            method: 'put',
+            headers: {
+                'Content-type': 'application/json'
+            },
+            body: JSON.stringify(book)
         }
+        const path = url + '/ff' + book.id;
+        fetch(path, options)
+            .then(function(response) {
+                if (response.status != 200) {
+                    throw new Error(`${response.status}: ${response.statusText}`);
+                }
+            })
+            .catch(console.log);
     }
 
     function createBook(book) {
-        oReq.open('post', url, true);
-        oReq.setRequestHeader('Content-type', 'application/json');
-        oReq.send(JSON.stringify(book));
-        oReq.onreadystatechange = function() {
-            if (oReq.readyState == 4) {
-                if (oReq.status != 200) {
-                    console.log('Error: ' + oReq.status + ':' + oReq.statusText);
+        let options = {
+            method: 'post',
+            headers: {
+                'Content-type': 'application/json'
+            },
+            body: JSON.stringify(book)
+        }
+        fetch(url, options)
+            .then(function(response) {
+                if (response.status != 200) {
+                    throw new Error(`${response.status}: ${response.statusText}`);
                 } else {
                     location.reload();
                 }
-            }
-        }
-    }
-
-    function listener(response, callback) {
-        bookArray = JSON.parse(oReq.responseText);
-        callback(bookArray);
-    }
-
-    function listenerDelete() {
-        console.log('delete');
-        location.reload();
+            })
+            .catch(console.log);
     }
 
     return {
