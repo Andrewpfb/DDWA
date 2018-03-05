@@ -19,7 +19,7 @@ var AjaxHelper = (function() {
             if (oReq.status != 200) {
                 console.log('Error: ' + oReq.status + ':' + oReq.statusText);
             } else {
-                listener(oReq.response, callback);
+                listenerGet(oReq.response, callback);
             }
         }
     }
@@ -49,6 +49,8 @@ var AjaxHelper = (function() {
             if (oReq.readyState == 4) {
                 if (oReq.status != 200) {
                     console.log('Error: ' + oReq.status + ':' + oReq.statusText);
+                } else {
+                    PageFunction.DrawTable();
                 }
             }
         }
@@ -69,7 +71,7 @@ var AjaxHelper = (function() {
         }
     }
 
-    function listener(response, callback) {
+    function listenerGet(response, callback) {
         bookArray = JSON.parse(oReq.responseText);
         callback(bookArray);
     }

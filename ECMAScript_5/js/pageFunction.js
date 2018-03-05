@@ -4,16 +4,17 @@ var PageFunction = (function() {
     var isEdit = false;
 
     function initPage() {
+        AjaxHelper.InitAjax(GLOBAL_CONST.URL);
         document.getElementById('bookForm').onsubmit = function(event) {
             event.preventDefault();
             event.stopImmediatePropagation();
+            console.log('11');
             saveBook();
         }
         drawTable();
     }
 
     function drawTable() {
-        AjaxHelper.InitAjax(GLOBAL_CONST.URL);
         var callback = TableBuilder.CreateTable;
         AjaxHelper.GetBooks(callback);
     }
@@ -80,7 +81,6 @@ var PageFunction = (function() {
         }
         document.getElementById('bookForm').style.display = "none";
         document.getElementById('createBookFormBtn').style.display = 'block';
-        location.reload();
     };
 
     function changeBookTypeByForm() {
