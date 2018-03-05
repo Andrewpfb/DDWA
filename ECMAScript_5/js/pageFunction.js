@@ -13,6 +13,7 @@ const PageFunction = (function() {
             saveBook();
         }
         select = document.getElementById('selectTypeBook');
+        drawTable();
     };
 
     function drawTable() {
