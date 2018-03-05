@@ -39,7 +39,7 @@ const AjaxHelper = (function() {
             try {
                 const response = await fetch(path, options);
                 console.log(`Delete's status: ${response.status} ${response.statusText}`);
-                location.reload();
+                PageFunction.DrawTable();
             } catch (err) {
                 console.log(err);
             }
@@ -62,7 +62,7 @@ const AjaxHelper = (function() {
         try {
             const response = await fetch(path, options);
             console.log(`Update's status: ${response.status} ${response.statusText}`);
-            location.reload();
+            PageFunction.DrawTable();
         } catch (err) {
             console.log(err);
         }
@@ -79,7 +79,7 @@ const AjaxHelper = (function() {
         try {
             const response = await fetch(url, options);
             console.log(`Create's status: ${response.status} ${response.statusText}`);
-            location.reload();
+            PageFunction.DrawTable();
         } catch (err) {
             console.log(err);
         }
