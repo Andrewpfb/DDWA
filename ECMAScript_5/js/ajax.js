@@ -63,7 +63,7 @@ var AjaxHelper = (function() {
                 if (oReq.status != 200) {
                     console.log('Error: ' + oReq.status + ':' + oReq.statusText);
                 } else {
-                    location.reload();
+                    PageFunction.DrawTable();
                 }
             }
         }
@@ -71,15 +71,12 @@ var AjaxHelper = (function() {
 
     function listener(response, callback) {
         bookArray = JSON.parse(oReq.responseText);
-        // for (var i = 0; i < bookFromServer.length; i++) {
-        //     bookArray.push(Models.CreateBook(bookFromServer[i]));
-        // }
         callback(bookArray);
     }
 
     function listenerDelete() {
         console.log('delete');
-        location.reload();
+        PageFunction.DrawTable();
     }
 
     return {

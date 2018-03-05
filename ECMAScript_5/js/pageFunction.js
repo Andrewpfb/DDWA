@@ -4,12 +4,16 @@ var PageFunction = (function() {
     var isEdit = false;
 
     function initPage() {
-        AjaxHelper.InitAjax(GLOBAL_CONST.URL);
         document.getElementById('bookForm').onsubmit = function(event) {
             event.preventDefault();
             event.stopImmediatePropagation();
             saveBook();
         }
+        drawTable();
+    }
+
+    function drawTable() {
+        AjaxHelper.InitAjax(GLOBAL_CONST.URL);
         var callback = TableBuilder.CreateTable;
         AjaxHelper.GetBooks(callback);
     }
@@ -127,6 +131,9 @@ var PageFunction = (function() {
         },
         ChangeBookTypeByForm: function() {
             changeBookTypeByForm();
+        },
+        DrawTable: function() {
+            drawTable();
         }
     }
 })();
