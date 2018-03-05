@@ -43,14 +43,15 @@ const AjaxHelper = (function() {
             let options = {
                 method: 'delete'
             };
-            let path = parameter + `?id=${id}`;
+            let path = url + `?id=${id}`;
             fetch(path, options)
                 .then(function(response) {
                     if (response.status != 200) {
                         throw new Error(`${response.status}: ${response.statusText}`);
+                    } else {
+                        console.log('delete');
+                        PageFunction.DrawTable();
                     }
-                    console.log('delete');
-                    location.reload();
                 })
                 .catch(console.log);
         }
@@ -73,6 +74,8 @@ const AjaxHelper = (function() {
             .then(function(response) {
                 if (response.status != 200) {
                     throw new Error(`${response.status}: ${response.statusText}`);
+                } else {
+                    PageFunction.DrawTable();
                 }
             })
             .catch(console.log);
@@ -91,7 +94,7 @@ const AjaxHelper = (function() {
                 if (response.status != 200) {
                     throw new Error(`${response.status}: ${response.statusText}`);
                 } else {
-                    location.reload();
+                    PageFunction.DrawTable();
                 }
             })
             .catch(console.log);

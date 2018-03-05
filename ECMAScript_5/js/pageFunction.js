@@ -13,9 +13,13 @@ const PageFunction = (function() {
             saveBook();
         }
         select = document.getElementById('selectTypeBook');
+        drawTable();
+    };
+
+    function drawTable() {
         const callback = TableBuilder.CreateTable;
         AjaxHelper.GetBooks(callback);
-    };
+    }
 
     function getInfo(id) {
         const book = AjaxHelper.GetBookInfoById(id);
@@ -79,7 +83,6 @@ const PageFunction = (function() {
         }
         document.getElementById('bookForm').style.display = "none";
         document.getElementById('createBookFormBtn').style.display = 'block';
-        location.reload();
     };
 
     function changeBookTypeByForm() {
@@ -136,6 +139,9 @@ const PageFunction = (function() {
         },
         Search: function() {
             search();
+        },
+        DrawTable: function() {
+            drawTable();
         }
     }
 })();
