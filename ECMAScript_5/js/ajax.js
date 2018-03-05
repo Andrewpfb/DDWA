@@ -26,10 +26,18 @@ var AjaxHelper = (function() {
 
     function deleteBookById(id) {
         if (confirm('Are you sure?')) {
-            oReq.onload = listenerDelete;
             var parameter = '?id=' + id;
             oReq.open("delete", url + parameter, true);
             oReq.send();
+            oReq.onreadystatechange = function() {
+                if (oReq.readyState == 4) {
+                    if (oReq.status != 200) {
+                        console.log('Error: ' + oReq.status + ':' + oReq.statusText);
+                    } else {
+                        listenerDelete();
+                    }
+                }
+            }
         }
     }
 
