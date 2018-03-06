@@ -34,15 +34,14 @@ function LoadData() {
 
 if (!!window.Worker) {
     var worker = new Worker('./js/worker.js');
-    // if (Number(localStorage.getItem('lastUpdate')) < new Date().getMinutes()) {
-    //     worker.postMessage(0);
-    // };
-    postMessage(1000);
+    var delay = new Date() - new Date(localStorage.getItem('lastUpdate'));
+    if (delay < 60000) {
+        worker.postMessage(60000 - delay);
+    } else {
+        worker.postMessage(0);
+    };
     worker.onmessage = function(e) {
         document.getElementById('count').value = e.data;
-        localStorage.setItem('lastUpdate', new Date().getMinutes());
+        localStorage.setItem('lastUpdate', new Date());
     };
 }
-
-// воркер стартует. Уходим со страницы, возвращаемся. Если прошла минута, воркер стартует, если нет - нет 
-// и висит до упора.(
