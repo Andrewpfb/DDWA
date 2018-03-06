@@ -33,8 +33,8 @@ function LoadData() {
 };
 
 if (!!window.Worker) {
-    var worker = new Worker('./js/worker.js');
-    var delay = new Date() - new Date(localStorage.getItem('lastUpdate'));
+    let worker = new Worker('./js/worker.js');
+    let delay = new Date() - new Date(localStorage.getItem('lastUpdate'));
     if (delay < 60000) {
         worker.postMessage(60000 - delay);
     } else {
