@@ -9,11 +9,6 @@ var cache = require('gulp-cache');
 var del = require('del');
 var runSequence = require('run-sequence');
 
-// Basic Gulp task syntax
-gulp.task('hello', function() {
-    console.log('Hello Zell!');
-})
-
 // Development Tasks 
 // -----------------
 
@@ -21,7 +16,7 @@ gulp.task('hello', function() {
 gulp.task('browserSync', function() {
     browserSync({
         server: {
-            baseDir: 'app'
+            baseDir: 'dist'
         }
     })
 })
@@ -40,11 +35,10 @@ gulp.task('useref', function() {
 
     return gulp.src('app/*.html')
         .pipe(useref())
-        .pipe(gulpIf('*.js', uglify()))
-        .pipe(gulpIf('*.css', cssnano()))
+        .pipe(gulpIf('app/js/ajax.js', uglify()))
+        .pipe(gulpIf('app/css/*.css', cssnano()))
         .pipe(gulp.dest('dist'));
 });
-
 // Optimizing Images 
 gulp.task('images', function() {
     return gulp.src('app/images/**/*.+(png|jpg|jpeg|gif|svg)')

@@ -1,5 +1,3 @@
-"use strict";
-
 const AjaxHelper = (function() {
     let url, bookArray;
 
