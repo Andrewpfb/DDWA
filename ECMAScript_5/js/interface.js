@@ -34,9 +34,15 @@ function LoadData() {
 
 if (!!window.Worker) {
     var worker = new Worker('./js/worker.js');
-    worker.postMessage('Hellow World');
+    // if (Number(localStorage.getItem('lastUpdate')) < new Date().getMinutes()) {
+    //     worker.postMessage(0);
+    // };
+    postMessage(1000);
     worker.onmessage = function(e) {
         document.getElementById('count').value = e.data;
-        console.log(e.data);
+        localStorage.setItem('lastUpdate', new Date().getMinutes());
     };
 }
+
+// воркер стартует. Уходим со страницы, возвращаемся. Если прошла минута, воркер стартует, если нет - нет 
+// и висит до упора.(

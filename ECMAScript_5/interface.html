@@ -7,65 +7,72 @@
 </head>
 
 <body onload="LoadData()">
-    <form id="bookForm" class="main">
-        <input type="hidden" id="bookId">
-        <div class="field">
-            <label>Select book's type: </label>
-            <select id="selectTypeBook" onchange="ChangeCreateBookType()">
+    <div id="createForm">
+        <form id="bookForm" class="main">
+            <input type="hidden" id="bookId">
+            <div class="field">
+                <label>Select book's type: </label>
+                <select id="selectTypeBook" onchange="ChangeCreateBookType()">
             <option value="1">Audio book</option>
             <option value="2">School book</option>
         </select>
-            <div class="field">
-                <label>Name: </label><input type="text" required id="bookName" pattern="^[а-яА-ЯёЁa-zA-Z0-9]+" />
-            </div>
-            <div class="field">
-                <label>Genre: </label><input type="text" required id="bookGenre" pattern="^[а-яА-ЯёЁa-zA-Z]+" />
-            </div>
-            <div class="field">
-                <label>Author: </label><input type="text" required id="bookAuthor" pattern="^[а-яА-ЯёЁa-zA-Z]+" />
-            </div>
-            <div class="field">
-                <label>IsHasCD: </label><input type="checkbox" id="bookCD" />
-            </div>
-            <div class="field">
-                <label>IsHasDVD: </label><input type="checkbox" id="bookDVD" />
-            </div>
-            <div class="field">
-                <label>Publishing house: </label><input type="text" required id="bookPublHouse" pattern="^[а-яА-ЯёЁa-zA-Z0-9]+" />
-            </div>
-            <div id="forAudio">
                 <div class="field">
-                    <label>Duration: </label><input type="number" id="bookDuration" max="1000" pattern="^[0-9]" />
+                    <label>Name: </label><input type="text" required id="bookName" pattern="^[а-яА-ЯёЁa-zA-Z0-9]+" />
                 </div>
                 <div class="field">
-                    <label>Size: </label><input type="number" id="bookSize" max="3000" pattern="^[0-9]+" />
-                </div>
-            </div>
-            <div id="forSchool" style="display:none">
-                <div class="field">
-                    <label>Page count: </label><input type="number" id="bookPageCount" max="2000" pattern="^[0-9]+" />
+                    <label>Genre: </label><input type="text" required id="bookGenre" pattern="^[а-яА-ЯёЁa-zA-Z]+" />
                 </div>
                 <div class="field">
-                    <label>Cover type: </label><input type="text" id="bookCoverType" pattern="^[а-яА-ЯёЁa-zA-Z]+" />
+                    <label>Author: </label><input type="text" required id="bookAuthor" pattern="^[а-яА-ЯёЁa-zA-Z]+" />
+                </div>
+                <div class="field">
+                    <label>IsHasCD: </label><input type="checkbox" id="bookCD" />
+                </div>
+                <div class="field">
+                    <label>IsHasDVD: </label><input type="checkbox" id="bookDVD" />
+                </div>
+                <div class="field">
+                    <label>Publishing house: </label><input type="text" required id="bookPublHouse" pattern="^[а-яА-ЯёЁa-zA-Z0-9]+" />
+                </div>
+                <div id="forAudio">
+                    <div class="field">
+                        <label>Duration: </label><input type="number" id="bookDuration" max="1000" pattern="^[0-9]" />
+                    </div>
+                    <div class="field">
+                        <label>Size: </label><input type="number" id="bookSize" max="3000" pattern="^[0-9]+" />
+                    </div>
+                </div>
+                <div id="forSchool" style="display:none">
+                    <div class="field">
+                        <label>Page count: </label><input type="number" id="bookPageCount" max="2000" pattern="^[0-9]+" />
+                    </div>
+                    <div class="field">
+                        <label>Cover type: </label><input type="text" id="bookCoverType" pattern="^[а-яА-ЯёЁa-zA-Z]+" />
+                    </div>
+                </div>
+                <div class="field">
+                    <input type="submit" value="Save" />
                 </div>
             </div>
-            <div class="field">
-                <input type="submit" value="Save" />
-            </div>
-        </div>
-    </form>
+        </form>
+    </div>
     <div id="tableForm">
         <input type="text" id="searchField" placeholder="Search..."><button type="button" onclick="Search()">Search</button>
     </div>
 
-    <label>Object count:</label><input type="text" id="count"></input>
-    <button id="createBookFormBtn" onclick="ShowCreateForm()">Create Book</button>
+    <div id="workerDiv" style="position:absolute; top:10px;right:10px;">
+        <label>Object count:</label><input type="text" id="count"></input>
+    </div>
+    <div id="createBtnDiv">
+        <button id="createBookFormBtn" onclick="ShowCreateForm()">Create Book</button>
+    </div>
     <script src="js/ajax.js"></script>
     <script src="js/global.js"></script>
     <script src="js/interface.js"></script>
     <script src="js/models.js"></script>
     <script src="js/pageFunction.js"></script>
     <script src="js/table.js"></script>
+    <a href="test.html">hey</a>
 </body>
 
 </html>
