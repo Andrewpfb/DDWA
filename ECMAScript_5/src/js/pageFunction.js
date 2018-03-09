@@ -1,3 +1,5 @@
+import Icon from '../img/bnr.jpg';
+
 import AjaxHelper from './ajax.js';
 import TableBuilder from './table.js';
 import GLOBAL_CONST from './global.js';
@@ -25,6 +27,14 @@ const PageFunction = (function() {
             showCreateForm();
         };
         select = document.getElementById('selectTypeBook');
+        var icon = new Image();
+        icon.src = Icon;
+        icon.height = 50;
+        document.getElementById('logo').appendChild(icon);
+        var banner = new Image();
+        banner.src = Icon;
+        banner.width = 260;
+        document.getElementById('banner').appendChild(banner);
         drawTable();
     };
 
