@@ -2,9 +2,7 @@
 
 <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
-    <!--build:css css/styles.min.css-->
     <link rel="stylesheet" href="css/style.css">
-    <!--build:css css/styles.min.css-->
     <title>EcmaScript5</title>
 </head>
 
@@ -59,23 +57,21 @@
         </form>
     </div>
     <div id="tableForm">
-        <input type="text" id="searchField" placeholder="Search..."><button type="button" onclick="Search()">Search</button>
+        <input type="text" id="searchField" placeholder="Search..."><button type="button" id="searchBtn">Search</button>
     </div>
 
     <div id="workerDiv" style="position:absolute; top:10px;right:10px;">
         <label>Object count:</label><input type="text" id="count"></input>
     </div>
     <div id="createBtnDiv">
-        <button id="createBookFormBtn" onclick="ShowCreateForm()">Create Book</button>
+        <button id="createBookFormBtn" id="createBookFormBtn">Create Book</button>
     </div>
-    <!--build:js js/main.min.js -->
     <script src="js/ajax.js"></script>
     <script src="js/global.js"></script>
     <script src="js/interface.js"></script>
     <script src="js/models.js"></script>
     <script src="js/pageFunction.js"></script>
     <script src="js/table.js"></script>
-    <!-- endbuild -->
     <a href="test.html">hey</a>
 </body>
 

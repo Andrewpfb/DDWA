@@ -1,4 +1,7 @@
-"use strict";
+import AjaxHelper from './ajax.js';
+import TableBuilder from './table.js';
+import GLOBAL_CONST from './global.js';
+import Models from './models.js';
 
 const PageFunction = (function() {
     let isEdit = false;
@@ -11,14 +14,46 @@ const PageFunction = (function() {
             event.preventDefault();
             event.stopImmediatePropagation();
             saveBook();
-        }
+        };
+        document.getElementById('selectTypeBook').onchange = function() {
+            changeBookTypeByForm();
+        };
+        document.getElementById('searchBtn').onclick = function() {
+            search();
+        };
+        document.getElementById('createBookFormBtn').onclick = function() {
+            showCreateForm();
+        };
         select = document.getElementById('selectTypeBook');
         drawTable();
     };
 
     function drawTable() {
         const callback = TableBuilder.CreateTable;
-        AjaxHelper.GetBooks(callback);
+        const handler = setHandler;
+        AjaxHelper.GetBooks(callback, handler);
+    }
+
+    function setHandler() {
+        const del = document.getElementsByClassName('delTableBtn');
+        const info = document.getElementsByClassName('infoTableBtn');
+        const edit = document.getElementsByClassName('editTableBtn');
+        const table = document.getElementById('BooksTable');
+        for (let i = 0; i < del.length; i++) {
+            del[i].addEventListener('click', function() {
+                deleteBook(del[i].value);
+            });
+            info[i].addEventListener('click', function() {
+                getInfo(info[i].value);
+            });
+            edit[i].addEventListener('click', function() {
+                editBook(edit[i].value);
+            });
+        }
+        table.onclick = function(e) {
+            if (e.target.tagName != 'TH') return;
+            AjaxHelper.SortBooks(e.target.cellIndex);
+        }
     }
 
     function getInfo(id) {
@@ -145,3 +180,5 @@ const PageFunction = (function() {
         }
     }
 })();
+
+export default PageFunction;

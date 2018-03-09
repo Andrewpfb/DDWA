@@ -1,4 +1,5 @@
-"use strict";
+import Models from './models.js';
+import PageFunction from './pageFunction.js';
 
 const TableBuilder = (function() {
     let divId;
@@ -15,29 +16,28 @@ const TableBuilder = (function() {
         bookTableObj.setAttribute('id', 'BooksTable');
 
         let tableHTML = '<caption>Books</caption><thead><tr>';
-
         tableHTML += `
-        <td> Name </td>
-        <td> Author </td>
-        <td> Genre </td>
-        <td> IsHasCD </td>
-        <td> IsHasDVD </td>
-        <td> PublishingHouse </td>
-        <td> Delete </td>
-        <td> Info </td>
-        <td> Edit </td>
+        <th> Name </th>
+        <th> Genre </th>
+        <th> Author </th>
+        <th> IsHasCD </th>
+        <th> IsHasDVD </th>
+        <th> PublishingHouse </th>
+        <th> Delete </th>
+        <th> Info </th>
+        <th> Edit </th>
         </tr></thead>`;
         for (let i = 0; i < array.length; i++) {
             tableHTML += `<tr>
                 <td> ${array[i].Name}</td>
-                <td> ${array[i].Author}</td>
                 <td> ${array[i].Genre}</td>
+                <td> ${array[i].Author}</td>
                 <td> ${array[i].IsHasCD}</td>
                 <td> ${array[i].IsHasDVD}</td>
                 <td> ${array[i].PublishingHouse}</td>
-                <td><button onclick="Delete('${array[i].id}')">Delete</button></td>
-                <td><button onclick="Info('${array[i].id}')">Info</button></td>
-                <td><button onclick="Edit('${array[i].id}')">Edit</button></td>
+                <td><button class="delTableBtn" value="${array[i].id}">Delete</button></td>
+                <td><button class="infoTableBtn" value="${array[i].id}">Info</button></td>
+                <td><button class="editTableBtn" value="${array[i].id}">Edit</button></td>
                 </tr>`;
         }
         bookTableObj.innerHTML = tableHTML;
@@ -71,3 +71,5 @@ const TableBuilder = (function() {
         }
     }
 })();
+
+export default TableBuilder;

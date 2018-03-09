@@ -1,5 +1,3 @@
-"use strict";
-
 const GLOBAL_CONST = (function() {
     const url = 'http://localhost:2403/books';
     const audioType = 1;
@@ -10,3 +8,5 @@ const GLOBAL_CONST = (function() {
         SCHOOL_TYPE: schoolType
     }
 })();
+
+export default GLOBAL_CONST;

@@ -1,5 +1,3 @@
-"use strict";
-
 const Models = (function() {
     class Book {
         constructor(initArray) {
@@ -216,3 +214,5 @@ const Models = (function() {
         }
     }
 })();
+
+export default Models;

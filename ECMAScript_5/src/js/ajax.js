@@ -1,3 +1,6 @@
+import TableBuilder from './table.js';
+import PageFunction from './pageFunction.js';
+
 const AjaxHelper = (function() {
     let url, bookArray;
 
@@ -6,7 +9,7 @@ const AjaxHelper = (function() {
         bookArray = [];
     }
 
-    async function getBooks(callback) {
+    async function getBooks(callback, handler) {
         const options = {
             method: 'get'
         };
@@ -15,10 +18,29 @@ const AjaxHelper = (function() {
             const bookArrayResponse = await response.json();
             bookArray = bookArrayResponse;
             callback(bookArray);
+            handler();
         } catch (err) {
             console.log(err);
         }
     };
+
+    function sortBooks(parameter) {
+        console.log(parameter);
+        let keys = Object.keys(bookArray[0]);
+        console.log(keys);
+        let fieldName = keys[parameter];
+        bookArray.sort(function(a, b) {
+            if (a[fieldName] > b[fieldName]) {
+                return 1;
+            }
+            if (a[fieldName] < b[fieldName]) {
+                return -1;
+            }
+            return 0;
+            // return a[fieldName] > b[fieldName];
+        });
+        TableBuilder.CreateTable(bookArray);
+    }
 
     function searchBooks(searchWord, callback = TableBuilder.CreateTable) {
         callback(bookArray.filter(
@@ -87,8 +109,8 @@ const AjaxHelper = (function() {
         InitAjax: function(url) {
             initAjax(url);
         },
-        GetBooks: function(callback) {
-            getBooks(callback);
+        GetBooks: function(callback, handler) {
+            getBooks(callback, handler);
         },
         DeleteBookById: function(id) {
             deleteBookById(id);
@@ -104,6 +126,11 @@ const AjaxHelper = (function() {
         },
         SearchBooks: function(searchWord, callback) {
             searchBooks(searchWord, callback);
+        },
+        SortBooks: function(parameter) {
+            sortBooks(parameter);
         }
     }
 })();
+
+export default AjaxHelper;
