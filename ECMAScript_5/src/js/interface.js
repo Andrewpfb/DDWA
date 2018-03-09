@@ -1,3 +1,5 @@
+import '../css/style.css';
+
 import PageFunction from './pageFunction.js';
 
 window.onload = function() {
