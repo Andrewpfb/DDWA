@@ -1,5 +1,4 @@
 const path = require('path');
-const UglifyJSPlugin = require('uglifyjs-webpack-plugin');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 const CleanWebpackPlugin = require('clean-webpack-plugin');
 
@@ -14,8 +13,8 @@ module.exports = {
         path: path.resolve(__dirname, 'dist')
     },
     watch: true,
+    devtool: 'source-map',
     plugins: [
-        new UglifyJSPlugin(),
         new CleanWebpackPlugin(['dist']),
         new HtmlWebpackPlugin({
             hash: true,
@@ -27,6 +26,14 @@ module.exports = {
     ],
     module: {
         rules: [{
+                test: /\.js$/,
+                exclude: /(node_modules)/,
+                loader: 'babel-loader',
+                query: {
+                    presets: ['es2015']
+                }
+            },
+            {
                 test: /\.css$/,
                 use: [
                     'style-loader',
