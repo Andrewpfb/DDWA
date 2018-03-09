@@ -7,7 +7,7 @@ window.onload = function() {
 }
 
 if (!!window.Worker) {
-    let worker = new Worker('/dist/worker.js');
+    let worker = new Worker('./worker.js');
     let delay = new Date() - new Date(localStorage.getItem('lastUpdate'));
     if (delay < 60000) {
         worker.postMessage(60000 - delay);
