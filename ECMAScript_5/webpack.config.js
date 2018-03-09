@@ -1,4 +1,5 @@
 const path = require('path');
+const webpack = require('webpack');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 const CleanWebpackPlugin = require('clean-webpack-plugin');
 
@@ -15,6 +16,7 @@ module.exports = {
     watch: true,
     devtool: 'source-map',
     plugins: [
+        new webpack.HotModuleReplacementPlugin(),
         new CleanWebpackPlugin(['dist']),
         new HtmlWebpackPlugin({
             hash: true,
@@ -37,7 +39,8 @@ module.exports = {
                 test: /\.css$/,
                 use: [
                     'style-loader',
-                    'css-loader'
+                    'css-loader?importLoaders=1&sourceMap',
+                    'postcss-loader'
                 ]
             },
             {
@@ -47,5 +50,13 @@ module.exports = {
                 ]
             }
         ]
+    },
+    devServer: {
+        contentBase: path.resolve(__dirname, 'dist'),
+        compress: false,
+        port: 9000,
+        historyApiFallback: true,
+        hot: true,
+        host: '127.0.0.1'
     }
 };
