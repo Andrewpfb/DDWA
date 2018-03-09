@@ -1,15 +1,21 @@
 const path = require('path');
+const UglifyJSPlugin = require('uglifyjs-webpack-plugin');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
+const CleanWebpackPlugin = require('clean-webpack-plugin');
 
 module.exports = {
     context: path.resolve(__dirname, 'src'),
-    entry: './js/interface.js',
+    entry: {
+        bundle: './js/interface.js',
+        worker: './js/worker.js'
+    },
     output: {
-        filename: 'bundle.js',
-        //path: 'dist/'
+        filename: '[name].js',
         path: path.resolve(__dirname, 'dist')
     },
     plugins: [
+        new UglifyJSPlugin(),
+        new CleanWebpackPlugin(['dist']),
         new HtmlWebpackPlugin({
             hash: true,
             minify: {
