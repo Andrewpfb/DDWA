@@ -28,11 +28,20 @@ module.exports = {
     ],
     module: {
         rules: [{
+                test: /\.worker\.js$/,
+                use: { loader: 'worker-loader' }
+            },
+            {
                 test: /\.js$/,
                 exclude: /(node_modules)/,
                 loader: 'babel-loader',
                 query: {
-                    plugins: ['transform-runtime'],
+                    plugins: [
+                        'syntax-async-functions',
+                        'transform-async-to-generator',
+                        'transform-regenerator',
+                        'transform-runtime'
+                    ],
                     presets: ['es2015']
                 }
             },
@@ -57,7 +66,7 @@ module.exports = {
         compress: false,
         port: 9000,
         historyApiFallback: true,
-        hot: true,
+        hot: false,
         host: '127.0.0.1'
     }
 };
