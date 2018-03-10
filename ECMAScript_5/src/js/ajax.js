@@ -1,5 +1,7 @@
 import TableBuilder from './table.js';
 import PageFunction from './pageFunction.js';
+import GLOBAL_CONST from './global.js';
+import Models from './models.js';
 
 const AjaxHelper = (function() {
     let url, bookArray;
@@ -25,9 +27,7 @@ const AjaxHelper = (function() {
     };
 
     function sortBooks(parameter) {
-        console.log(parameter);
         let keys = Object.keys(bookArray[0]);
-        console.log(keys);
         let fieldName = keys[parameter];
         bookArray.sort(function(a, b) {
             if (a[fieldName] > b[fieldName]) {
@@ -37,7 +37,6 @@ const AjaxHelper = (function() {
                 return -1;
             }
             return 0;
-            // return a[fieldName] > b[fieldName];
         });
         TableBuilder.CreateTable(bookArray);
     }

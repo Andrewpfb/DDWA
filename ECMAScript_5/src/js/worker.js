@@ -16,6 +16,7 @@ async function GetCount() {
         const array = await response.json();
         postMessage(array.length);
     } catch (err) {
+        debugger;
         postMessage(err);
     }
 }

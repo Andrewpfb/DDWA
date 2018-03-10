@@ -6,7 +6,7 @@ const CleanWebpackPlugin = require('clean-webpack-plugin');
 module.exports = {
     context: path.resolve(__dirname, 'src'),
     entry: {
-        bundle: './js/interface.js',
+        bundle: ['babel-polyfill', './js/interface.js'],
         worker: './js/worker.js'
     },
     output: {
@@ -32,6 +32,7 @@ module.exports = {
                 exclude: /(node_modules)/,
                 loader: 'babel-loader',
                 query: {
+                    plugins: ['transform-runtime'],
                     presets: ['es2015']
                 }
             },
