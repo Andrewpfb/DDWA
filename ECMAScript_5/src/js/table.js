@@ -12,10 +12,8 @@ const TableBuilder = (function() {
 
     function buildBooksTable(array) {
         bookTableObj.setAttribute('border', '1');
-
         bookTableObj.setAttribute('id', 'BooksTable');
-
-        let tableHTML = '<caption>Books</caption><thead><tr>';
+        let tableHTML = '<thead><tr>';
         tableHTML += `
         <th> Name </th>
         <th> Genre </th>

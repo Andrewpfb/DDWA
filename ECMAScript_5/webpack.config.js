@@ -66,7 +66,7 @@ module.exports = {
         compress: false,
         port: 9000,
         historyApiFallback: true,
-        hot: false,
+        hot: true,
         host: '127.0.0.1'
     }
 };

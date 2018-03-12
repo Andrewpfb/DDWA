@@ -1,15 +1,3 @@
-.field {
-    clear: both;
-    text-align: right;
-}
-
-label {
-    float: left;
-    padding-right: 10px;
-}
-
 .main {
-    float: left;
-    margin: 20px;
     display: none;
 }

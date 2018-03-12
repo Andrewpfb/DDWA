@@ -6,68 +6,85 @@
 </head>
 
 <body>
-    <div id="logo"></div>
-    <div id="createForm">
-        <form id="bookForm" class="main">
-            <input type="hidden" id="bookId">
-            <div class="field">
-                <label>Select book's type: </label>
-                <select id="selectTypeBook">
-            <option value="1">Audio book</option>
-            <option value="2">School book</option>
-        </select>
-                <div class="field">
-                    <label>Name: </label><input type="text" required id="bookName" pattern="^[а-яА-ЯёЁa-zA-Z0-9]+" />
+    <div class="row m-4" id="logo"></div>
+    <div class="row m-4 justify-content-between">
+        <div class="col-3 form-inline p-0">
+            <input class="form-control" type="text" id="searchField" placeholder="Search...">
+            <button class="btn btn-primary" type="button" id="searchBtn">Search</button>
+        </div>
+        <div class="col-3" id="createBtnDiv">
+            <button class="btn btn-primary" id="createBookFormBtn" id="createBookFormBtn">Create Book</button>
+        </div>
+    </div>
+    <div class="m-4" id="tableForm">
+    </div>
+    <div class="row">
+        <div class="col-4 m-4" id="createForm">
+            <form id="bookForm" class="main">
+                <input type="hidden" id="bookId">
+                <div class="form-group">
+                    <label for="selectTypeBook">Select book's type: </label>
+                    <select class="form-control" id="selectTypeBook">
+                        <option value="1">Audio book</option>
+                        <option value="2">School book</option>
+                    </select>
                 </div>
-                <div class="field">
-                    <label>Genre: </label><input type="text" required id="bookGenre" pattern="^[а-яА-ЯёЁa-zA-Z]+" />
+                <div class="form-group">
+                    <label for="bookName">Name: </label>
+                    <input class="form-control" type="text" required id="bookName" pattern="^[а-яА-ЯёЁa-zA-Z0-9]+" />
                 </div>
-                <div class="field">
-                    <label>Author: </label><input type="text" required id="bookAuthor" pattern="^[а-яА-ЯёЁa-zA-Z]+" />
+                <div class="form-group">
+                    <label for="bookGenre">Genre: </label>
+                    <input class="form-control" type="text" required id="bookGenre" pattern="^[а-яА-ЯёЁa-zA-Z]+" />
                 </div>
-                <div class="field">
-                    <label>IsHasCD: </label><input type="checkbox" id="bookCD" />
+                <div class="form-group">
+                    <label for="bookAuthor">Author: </label>
+                    <input class="form-control" type="text" required id="bookAuthor" pattern="^[а-яА-ЯёЁa-zA-Z]+" />
                 </div>
-                <div class="field">
-                    <label>IsHasDVD: </label><input type="checkbox" id="bookDVD" />
+                <div class="form-check">
+                    <input class="form-check-input" type="checkbox" id="bookCD" />
+                    <label class="form-check-label" for="bookCD">Is has CD?</label>
                 </div>
-                <div class="field">
-                    <label>Publishing house: </label><input type="text" required id="bookPublHouse" pattern="^[а-яА-ЯёЁa-zA-Z0-9]+" />
+                <div class="form-check">
+                    <input class="form-check-input" type="checkbox" id="bookDVD" />
+                    <label class="form-check-label" for="bookDVD">Is has DVD?</label>
+                </div>
+                <div class="form-group">
+                    <label for="bookPublHouse">Publishing house: </label>
+                    <input class="form-control" type="text" required id="bookPublHouse" pattern="^[а-яА-ЯёЁa-zA-Z0-9]+" />
                 </div>
                 <div id="forAudio">
-                    <div class="field">
-                        <label>Duration: </label><input type="number" id="bookDuration" max="1000" pattern="^[0-9]" />
+                    <div class="form-group">
+                        <label for="bookDuration">Duration: </label>
+                        <input class="form-control" type="number" id="bookDuration" max="1000" pattern="^[0-9]" />
                     </div>
-                    <div class="field">
-                        <label>Size: </label><input type="number" id="bookSize" max="3000" pattern="^[0-9]+" />
+                    <div class="form-group">
+                        <label for="bookSize">Size: </label>
+                        <input class="form-control" type="number" id="bookSize" max="3000" pattern="^[0-9]+" />
                     </div>
                 </div>
                 <div id="forSchool" style="display:none">
-                    <div class="field">
-                        <label>Page count: </label><input type="number" id="bookPageCount" max="2000" pattern="^[0-9]+" />
+                    <div class="form-group">
+                        <label for="bookPageCount">Page count: </label>
+                        <input class="form-control" type="number" id="bookPageCount" max="2000" pattern="^[0-9]+" />
                     </div>
-                    <div class="field">
-                        <label>Cover type: </label><input type="text" id="bookCoverType" pattern="^[а-яА-ЯёЁa-zA-Z]+" />
+                    <div class="form-group">
+                        <label for="bookCoverType">Cover type: </label>
+                        <input class="form-control" type="text" id="bookCoverType" pattern="^[а-яА-ЯёЁa-zA-Z]+" />
                     </div>
                 </div>
-                <div class="field">
-                    <input type="submit" value="Save" />
+                <div class="form-group">
+                    <input class="btn btn-primary" type="submit" value="Save" />
                 </div>
-            </div>
-        </form>
-    </div>
-    <div id="tableForm">
-        <input type="text" id="searchField" placeholder="Search..."><button type="button" id="searchBtn">Search</button>
+            </form>
+        </div>
     </div>
 
-    <div id="workerDiv" style="position:absolute; top:10px;right:10px;">
+    <div class="m-4" id="workerDiv">
         <label>Object count:</label><input type="text" id="count"></input>
     </div>
-    <div id="createBtnDiv">
-        <button id="createBookFormBtn" id="createBookFormBtn">Create Book</button>
-    </div>
-    <div id="banner"></div>
-    <a href="test.html">hey</a>
+
+    <div class="navbar-fixed-bottom m-4" id="banner"></div>
 </body>
 
 </html>
