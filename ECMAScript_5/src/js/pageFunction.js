@@ -12,29 +12,29 @@ const PageFunction = (function() {
     function initPage() {
         AjaxHelper.InitAjax(GLOBAL_CONST.URL);
         TableBuilder.InitTableBuilder('tableForm');
-        document.getElementById('bookForm').onsubmit = function(event) {
+        $('#bookForm').submit(function(event) {
             event.preventDefault();
             event.stopImmediatePropagation();
             saveBook();
-        };
-        document.getElementById('selectTypeBook').onchange = function() {
+        });
+        $('#selectTypeBook').change(function() {
             changeBookTypeByForm();
-        };
-        document.getElementById('searchBtn').onclick = function() {
+        });
+        $('#searchBtn').click(function() {
             search();
-        };
-        document.getElementById('createBookFormBtn').onclick = function() {
+        });
+        $('#createBookFormBtn').click(function() {
             showCreateForm();
-        };
-        select = document.getElementById('selectTypeBook');
+        });
+        select = $('#selectTypeBook');
         var icon = new Image();
         icon.src = Icon;
         icon.height = 50;
-        document.getElementById('logo').appendChild(icon);
+        $('#logo').append(icon);
         var banner = new Image();
         banner.src = Icon;
         banner.width = 260;
-        document.getElementById('banner').appendChild(banner);
+        $('#banner').append(banner);
         drawTable();
     };
 
@@ -45,25 +45,20 @@ const PageFunction = (function() {
     }
 
     function setHandler() {
-        const del = document.getElementsByClassName('delTableBtn');
-        const info = document.getElementsByClassName('infoTableBtn');
-        const edit = document.getElementsByClassName('editTableBtn');
-        const table = document.getElementById('BooksTable');
-        for (let i = 0; i < del.length; i++) {
-            del[i].addEventListener('click', function() {
-                deleteBook(del[i].value);
-            });
-            info[i].addEventListener('click', function() {
-                getInfo(info[i].value);
-            });
-            edit[i].addEventListener('click', function() {
-                editBook(edit[i].value);
-            });
-        }
-        table.onclick = function(e) {
-            if (e.target.tagName != 'TH') return;
-            AjaxHelper.SortBooks(e.target.cellIndex);
-        }
+        $('.infoTableBtn').click(function(event) {
+            getInfo(event.currentTarget.value);
+        });
+        $('.delTableBtn').click(function(event) {
+            deleteBook(event.currentTarget.value);
+        });
+        $('.editTableBtn').click(function(event) {
+            console.log('editclick');
+            editBook(event.currentTarget.value);
+        });
+        $('#BooksTable').click(function(event) {
+            if (event.target.tagName != 'TH') return;
+            AjaxHelper.SortBooks(event.target.cellIndex);
+        });
     }
 
     function getInfo(id) {
@@ -85,20 +80,21 @@ const PageFunction = (function() {
 
     function editBook(id) {
         const book = AjaxHelper.GetBookInfoById(id);
+
         if (book) {
             isEdit = true;
             setSelectValue(book.Type);
-            document.getElementById('bookId').value = book.id;
-            document.getElementById('bookName').value = book.Name;
-            document.getElementById('bookAuthor').value = book.Author;
-            document.getElementById('bookGenre').value = book.Genre;
-            document.getElementById('bookCD').checked = book.IsHasCD;
-            document.getElementById('bookDVD').checked = book.IsHasDVD;
-            document.getElementById('bookPublHouse').value = book.PublishingHouse;
-            document.getElementById('bookDuration').value = book.Duration;
-            document.getElementById('bookSize').value = book.Size;
-            document.getElementById('bookPageCount').value = book.PageCount;
-            document.getElementById('bookCoverType').value = book.CoverType;
+            $('#bookId').val(book.id);
+            $('#bookName').val(book.Name);
+            $('#bookAuthor').val(book.Author);
+            $('#bookGenre').val(book.Genre);
+            $('#bookCD').val(book.IsHasCD);
+            $('#bookDVD').val(book.IsHasDVD);
+            $('#bookPublHouse').val(book.PublishingHouse);
+            $('#bookDuration').val(book.Duration);
+            $('#bookSize').val(book.Size);
+            $('#bookPageCount').val(book.PageCount);
+            $('#bookCoverType').val(book.CoverType);
             showCreateForm();
         } else {
             console.log(`Error, book doesn't found`);
@@ -108,55 +104,54 @@ const PageFunction = (function() {
     function saveBook() {
         let book = {
             Type: getSelectedType(),
-            Name: document.getElementById('bookName').value,
-            Author: document.getElementById('bookAuthor').value,
-            Genre: document.getElementById('bookGenre').value,
-            IsHasCD: document.getElementById('bookCD').checked,
-            IsHasDVD: document.getElementById('bookDVD').checked,
-            PublishingHouse: document.getElementById('bookPublHouse').value,
-            Duration: document.getElementById('bookDuration').value,
-            Size: document.getElementById('bookSize').value,
-            PageCount: document.getElementById('bookPageCount').value,
-            CoverType: document.getElementById('bookCoverType').value,
+            Name: $('#bookName').val(),
+            Author: $('#bookAuthor').val(),
+            Genre: $('#bookGenre').val(),
+            IsHasCD: $('#bookCD').val(),
+            IsHasDVD: $('#bookDVD').val(),
+            PublishingHouse: $('#bookPublHouse').val(),
+            Duration: $('#bookDuration').val(),
+            Size: $('#bookSize').val(),
+            PageCount: $('#bookPageCount').val(),
+            CoverType: $('#bookCoverType').val(),
         };
         if (isEdit == true) {
             isEdit = false;
-            book.id = document.getElementById('bookId').value;
-            AjaxHelper.UpdateBook(book);
+            book.id = $('#bookId').val(),
+                AjaxHelper.UpdateBook(book);
         } else {
             AjaxHelper.CreateBook(book);
         }
-        document.getElementById('bookForm').style.display = "none";
-        document.getElementById('createBookFormBtn').style.display = 'block';
+        $('#bookForm').css('display', 'none');
+        $('#createBookFormBtn').css('display', 'block');
     };
 
     function changeBookTypeByForm() {
         if (getSelectedType() == GLOBAL_CONST.AUDIO_TYPE) {
-            document.getElementById('forAudio').style.display = 'block';
-            document.getElementById('forSchool').style.display = 'none';
+            $('#forAudio').css('display', 'block');
+            $('#forSchool').css('display', 'none');
         } else if (getSelectedType() == GLOBAL_CONST.SCHOOL_TYPE) {
-            document.getElementById('forAudio').style.display = 'none';
-            document.getElementById('forSchool').style.display = 'block';
+            $('#forAudio').css('display', 'none');
+            $('#forSchool').css('display', 'block');
         };
     };
 
     function showCreateForm() {
-        document.getElementById('bookForm').style.display = 'block';
-        document.getElementById('createBookFormBtn').style.display = 'none';
+        $('#bookForm').css('display', 'block');
+        $('#createBookFormBtn').css('display', 'none');
     };
 
     function getSelectedType() {
-        const selectOption = select.options[select.selectedIndex];
-        return selectOption.value;
+        return select.val();
     };
 
     function setSelectValue(value) {
-        const selectOption = select.options[value - 1].selected = true;
+        select.val(value);
         changeBookTypeByForm();
     };
 
     function search() {
-        let searchWord = document.getElementById('searchField').value;
+        let searchWord = $('#searchField').val();
         AjaxHelper.SearchBooks(searchWord);
     }
 
