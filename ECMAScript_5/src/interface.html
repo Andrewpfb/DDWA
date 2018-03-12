@@ -8,17 +8,13 @@
 <body>
     <div class="row m-4" id="logo"></div>
     <div class="row m-4 justify-content-between">
-        <div class="col-3 form-inline p-0">
-            <input class="form-control" type="text" id="searchField" placeholder="Search...">
-            <button class="btn btn-primary" type="button" id="searchBtn">Search</button>
-        </div>
         <div class="col-3" id="createBtnDiv">
             <button class="btn btn-primary" id="createBookFormBtn" id="createBookFormBtn">Create Book</button>
         </div>
     </div>
     <div class="m-4" id="tableForm">
-        <table id="BooksTable">
-            <thead>
+        <table id="BooksTable" class="table table-bordered">
+            <thead class="thead-dark">
                 <tr>
                     <th> Name </th>
                     <th> Genre </th>
@@ -31,6 +27,16 @@
                     <th> Edit </th>
                 </tr>
             </thead>
+            <tfoot>
+                <tr>
+                    <th> Name </th>
+                    <th> Genre </th>
+                    <th> Author </th>
+                    <th> IsHasCD </th>
+                    <th> IsHasDVD </th>
+                    <th> PublishingHouse </th>
+                </tr>
+            </tfoot>
         </table>
     </div>
     <div class="row">
@@ -46,15 +52,15 @@
                 </div>
                 <div class="form-group">
                     <label for="bookName">Name: </label>
-                    <input class="form-control" type="text" required id="bookName" pattern="^[а-яА-ЯёЁa-zA-Z0-9]+" />
+                    <input class="form-control name" type="text" id="bookName" />
                 </div>
                 <div class="form-group">
                     <label for="bookGenre">Genre: </label>
-                    <input class="form-control" type="text" required id="bookGenre" pattern="^[а-яА-ЯёЁa-zA-Z]+" />
+                    <input class="form-control onlyText" type="text" id="bookGenre" />
                 </div>
                 <div class="form-group">
                     <label for="bookAuthor">Author: </label>
-                    <input class="form-control" type="text" required id="bookAuthor" pattern="^[а-яА-ЯёЁa-zA-Z]+" />
+                    <input class="form-control onlyText" type="text" id="bookAuthor" />
                 </div>
                 <div class="form-check">
                     <input class="form-check-input" type="checkbox" id="bookCD" />
@@ -66,7 +72,7 @@
                 </div>
                 <div class="form-group">
                     <label for="bookPublHouse">Publishing house: </label>
-                    <input class="form-control" type="text" required id="bookPublHouse" pattern="^[а-яА-ЯёЁa-zA-Z0-9]+" />
+                    <input class="form-control onlyText" type="text" id="bookPublHouse" />
                 </div>
                 <div id="forAudio">
                     <div class="form-group">
@@ -85,13 +91,16 @@
                     </div>
                     <div class="form-group">
                         <label for="bookCoverType">Cover type: </label>
-                        <input class="form-control" type="text" id="bookCoverType" pattern="^[а-яА-ЯёЁa-zA-Z]+" />
+                        <input class="form-control" type="text" id="bookCoverType" />
                     </div>
                 </div>
                 <div class="form-group">
                     <input class="btn btn-primary" type="submit" value="Save" />
                 </div>
             </form>
+        </div>
+        <div class="col-4 m-4" id="infoTable">
+
         </div>
     </div>
 

@@ -6,6 +6,8 @@ import '../../node_modules/tempusdominus-bootstrap-4/build/css/tempusdominus-boo
 
 import PageFunction from './pageFunction.js';
 
+require('../../node_modules/datatables.net');
+require('../../node_modules/datatables.net-bs4');
 
 window.onload = function() {
     PageFunction.InitPage();
@@ -21,7 +23,6 @@ if (!!window.Worker) {
     };
     worker.onmessage = function(e) {
         $('#count').val(e.data);
-        //document.getElementById('count').value = e.data;
         localStorage.setItem('lastUpdate', new Date());
     };
 }

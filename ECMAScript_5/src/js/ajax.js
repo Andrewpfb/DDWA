@@ -4,49 +4,10 @@ import GLOBAL_CONST from './global.js';
 import Models from './models.js';
 
 const AjaxHelper = (function() {
-    let url, bookArray;
+    let url;
 
     function initAjax(initUrl) {
         url = initUrl;
-        bookArray = [];
-    }
-
-    async function getBooks(callback, handler) {
-        const options = {
-            method: 'get'
-        };
-        try {
-            const response = await fetch(url, options);
-            const bookArrayResponse = await response.json();
-            bookArray = bookArrayResponse;
-            callback(bookArray);
-            handler();
-        } catch (err) {
-            console.log(err);
-        }
-    };
-
-    function sortBooks(parameter) {
-        let keys = Object.keys(bookArray[0]);
-        let fieldName = keys[parameter];
-        bookArray.sort(function(a, b) {
-            if (a[fieldName] > b[fieldName]) {
-                return 1;
-            }
-            if (a[fieldName] < b[fieldName]) {
-                return -1;
-            }
-            return 0;
-        });
-        TableBuilder.CreateTable(bookArray);
-    }
-
-    function searchBooks(searchWord, callback = TableBuilder.CreateTable) {
-        callback(bookArray.filter(
-            s =>
-            s.Name == searchWord ||
-            s.Genre == searchWord ||
-            s.Author == searchWord));
     }
 
     async function deleteBookById(id) {
@@ -58,15 +19,32 @@ const AjaxHelper = (function() {
             try {
                 const response = await fetch(path, options);
                 console.log(`Delete's status: ${response.status} ${response.statusText}`);
-                PageFunction.DrawTable();
+                TableBuilder.UpdateTable();
             } catch (err) {
                 console.log(err);
             }
         }
     }
 
-    function getInfoById(id) {
-        return bookArray.find(x => x.id == id);
+    async function getInfoById(id) {
+        const options = {
+            method: 'get'
+        };
+        const path = url + '/' + id;
+        let book;
+        try {
+            const response = await fetch(path, options);
+            const bookFromServer = await response.json();
+
+            if (bookFromServer.Type == GLOBAL_CONST.AUDIO_TYPE) {
+                book = Models.CreateAudioBook(bookFromServer);
+            } else if (bookFromServer.Type == GLOBAL_CONST.SCHOOL_TYPE) {
+                book = Models.CreateSchoolBook(bookFromServer);
+            }
+        } catch (err) {
+            console.log(err);
+        }
+        return book;
     }
 
     async function updateBook(book) {
@@ -81,7 +59,7 @@ const AjaxHelper = (function() {
         try {
             const response = await fetch(path, options);
             console.log(`Update's status: ${response.status} ${response.statusText}`);
-            PageFunction.DrawTable();
+            TableBuilder.UpdateTable();
         } catch (err) {
             console.log(err);
         }
@@ -98,7 +76,7 @@ const AjaxHelper = (function() {
         try {
             const response = await fetch(url, options);
             console.log(`Create's status: ${response.status} ${response.statusText}`);
-            PageFunction.DrawTable();
+            TableBuilder.UpdateTable();
         } catch (err) {
             console.log(err);
         }
@@ -107,9 +85,6 @@ const AjaxHelper = (function() {
     return {
         InitAjax: function(url) {
             initAjax(url);
-        },
-        GetBooks: function(callback, handler) {
-            getBooks(callback, handler);
         },
         DeleteBookById: function(id) {
             deleteBookById(id);
@@ -122,12 +97,6 @@ const AjaxHelper = (function() {
         },
         CreateBook: function(book) {
             createBook(book);
-        },
-        SearchBooks: function(searchWord, callback) {
-            searchBooks(searchWord, callback);
-        },
-        SortBooks: function(parameter) {
-            sortBooks(parameter);
         }
     }
 })();

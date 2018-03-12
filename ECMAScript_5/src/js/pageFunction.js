@@ -10,22 +10,20 @@ const PageFunction = (function() {
     let select;
 
     function initPage() {
+        debugger;
+        $('#bookForm').validate({
+            submitHandler: function() {
+                alert('ok');
+            },
+            // rules: {
+            //     bookName: {
+            //         required: true,
+            //         regexp: '^[а-яА-ЯёЁa-zA-Z0-9]+'
+            //     }
+            // }
+        });
         AjaxHelper.InitAjax(GLOBAL_CONST.URL);
-        TableBuilder.InitTableBuilder('tableForm');
-        $('#bookForm').submit(function(event) {
-            event.preventDefault();
-            event.stopImmediatePropagation();
-            saveBook();
-        });
-        $('#selectTypeBook').change(function() {
-            changeBookTypeByForm();
-        });
-        $('#searchBtn').click(function() {
-            search();
-        });
-        $('#createBookFormBtn').click(function() {
-            showCreateForm();
-        });
+        TableBuilder.InitTable('BooksTable');
         select = $('#selectTypeBook');
         var icon = new Image();
         icon.src = Icon;
@@ -35,16 +33,41 @@ const PageFunction = (function() {
         banner.src = Icon;
         banner.width = 260;
         $('#banner').append(banner);
-        drawTable();
+        $.validator.addMethod(
+            'regexp',
+            function(value, element, regexp) {
+                var re = new RegExp(regexp);
+                return this.optional(element) || re.test(value);
+            },
+            "Please check your input."
+        );
+        $.validator.addClassRules({
+            name: {
+                required: true,
+                regexp: '^[а-яА-ЯёЁa-zA-Z0-9]+'
+            },
+            onlyText: {
+                required: true,
+                regexp: '^[а-яА-ЯёЁa-zA-Z]+'
+            }
+        });
     };
 
-    function drawTable() {
-        const callback = TableBuilder.CreateTable;
-        const handler = setHandler;
-        AjaxHelper.GetBooks(callback, handler);
-    }
-
     function setHandler() {
+        // $('#bookForm').submit(function(event) {
+        //     event.preventDefault();
+        //     event.stopImmediatePropagation();
+        //     saveBook();
+        // });
+        $('#selectTypeBook').change(function() {
+            changeBookTypeByForm();
+        });
+        $('#searchBtn').click(function() {
+            search();
+        });
+        $('#createBookFormBtn').click(function() {
+            showCreateForm();
+        });
         $('.infoTableBtn').click(function(event) {
             getInfo(event.currentTarget.value);
         });
@@ -52,26 +75,23 @@ const PageFunction = (function() {
             deleteBook(event.currentTarget.value);
         });
         $('.editTableBtn').click(function(event) {
-            console.log('editclick');
             editBook(event.currentTarget.value);
-        });
-        $('#BooksTable').click(function(event) {
-            if (event.target.tagName != 'TH') return;
-            AjaxHelper.SortBooks(event.target.cellIndex);
         });
     }
 
     function getInfo(id) {
-        const book = AjaxHelper.GetBookInfoById(id);
-        if (book) {
-            if (book.Type == GLOBAL_CONST.AUDIO_TYPE) {
-                TableBuilder.CreateDetailTable(Models.CreateAudioBook(book));
-            } else if (book.Type == GLOBAL_CONST.SCHOOL_TYPE) {
-                TableBuilder.CreateDetailTable(Models.CreateSchoolBook(book));
+        const promiseBook = AjaxHelper.GetBookInfoById(id);
+        promiseBook.then(function(book) {
+            if (book) {
+                if (book.Type == GLOBAL_CONST.AUDIO_TYPE) {
+                    TableBuilder.CreateDetailTable(Models.CreateAudioBook(book));
+                } else if (book.Type == GLOBAL_CONST.SCHOOL_TYPE) {
+                    TableBuilder.CreateDetailTable(Models.CreateSchoolBook(book));
+                }
+            } else {
+                console.log(`Book doesn't find`);
             }
-        } else {
-            console.log(`Book doesn't find`);
-        }
+        });
     };
 
     function deleteBook(id) {
@@ -79,26 +99,28 @@ const PageFunction = (function() {
     };
 
     function editBook(id) {
-        const book = AjaxHelper.GetBookInfoById(id);
-
-        if (book) {
-            isEdit = true;
-            setSelectValue(book.Type);
-            $('#bookId').val(book.id);
-            $('#bookName').val(book.Name);
-            $('#bookAuthor').val(book.Author);
-            $('#bookGenre').val(book.Genre);
-            $('#bookCD').val(book.IsHasCD);
-            $('#bookDVD').val(book.IsHasDVD);
-            $('#bookPublHouse').val(book.PublishingHouse);
-            $('#bookDuration').val(book.Duration);
-            $('#bookSize').val(book.Size);
-            $('#bookPageCount').val(book.PageCount);
-            $('#bookCoverType').val(book.CoverType);
-            showCreateForm();
-        } else {
-            console.log(`Error, book doesn't found`);
-        }
+        const promiseBook = AjaxHelper.GetBookInfoById(id);
+        promiseBook
+            .then(function(book) {
+                if (book) {
+                    isEdit = true;
+                    setSelectValue(book.Type);
+                    $('#bookId').val(book.id);
+                    $('#bookName').val(book.Name);
+                    $('#bookAuthor').val(book.Author);
+                    $('#bookGenre').val(book.Genre);
+                    $('#bookCD').prop('checked', book.IsHasCD);
+                    $('#bookDVD').prop('checked', book.IsHasDVD);
+                    $('#bookPublHouse').val(book.PublishingHouse);
+                    $('#bookDuration').val(book.Duration);
+                    $('#bookSize').val(book.Size);
+                    $('#bookPageCount').val(book.PageCount);
+                    $('#bookCoverType').val(book.CoverType);
+                    showCreateForm();
+                } else {
+                    console.log(`Error, book doesn't found`);
+                }
+            });
     };
 
     function saveBook() {
@@ -107,8 +129,8 @@ const PageFunction = (function() {
             Name: $('#bookName').val(),
             Author: $('#bookAuthor').val(),
             Genre: $('#bookGenre').val(),
-            IsHasCD: $('#bookCD').val(),
-            IsHasDVD: $('#bookDVD').val(),
+            IsHasCD: $('#bookCD').prop('checked'),
+            IsHasDVD: $('#bookDVD').prop('checked'),
             PublishingHouse: $('#bookPublHouse').val(),
             Duration: $('#bookDuration').val(),
             Size: $('#bookSize').val(),
@@ -150,11 +172,6 @@ const PageFunction = (function() {
         changeBookTypeByForm();
     };
 
-    function search() {
-        let searchWord = $('#searchField').val();
-        AjaxHelper.SearchBooks(searchWord);
-    }
-
     return {
         InitPage: function() {
             initPage();
@@ -177,11 +194,8 @@ const PageFunction = (function() {
         ChangeBookTypeByForm: function() {
             changeBookTypeByForm();
         },
-        Search: function() {
-            search();
-        },
         DrawTable() {
-            drawTable();
+            setHandler();
         }
     }
 })();

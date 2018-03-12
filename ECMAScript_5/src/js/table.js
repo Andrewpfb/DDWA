@@ -1,71 +1,88 @@
 import Models from './models.js';
 import PageFunction from './pageFunction.js';
+import GLOBAL_CONST from './global.js';
 
 const TableBuilder = (function() {
-    let divId;
-    const bookTableObj = document.createElement('table');
-    const detailTableObj = document.createElement('table');
+    let table;
 
-    function initTableBuilder(containerId) {
-        divId = containerId;
+    function initTable(tableHtmlId) {
+        const tableId = '#' + tableHtmlId;
+        table = $(tableId).dataTable({
+            'ajax': {
+                url: GLOBAL_CONST.URL,
+                dataSrc: ''
+            },
+            'columns': [
+                { data: 'Name' },
+                { data: 'Genre' },
+                { data: 'Author' },
+                { data: 'IsHasCD' },
+                { data: 'IsHasDVD' },
+                { data: 'PublishingHouse' },
+                {
+                    data: 'id',
+                    render: (id, type, full) => `<button class="delTableBtn btn btn-primary" value="${id}">Delete</button>`
+                },
+                {
+                    data: 'id',
+                    render: (id, type, full) => `<button class="infoTableBtn btn btn-primary" value="${id}">Info</button>`
+                },
+                {
+                    data: 'id',
+                    render: (id, type, full) => `<button class="editTableBtn btn btn-primary" value="${id}">Edit</button>`
+                }
+            ],
+            initComplete: function() {
+                this.api().columns().every(function() {
+                    var column = this;
+                    var select = $('<select><option value=""></option></select>')
+                        .appendTo($(column.footer()).empty())
+                        .on('change', function() {
+                            var val = $.fn.dataTable.util.escapeRegex(
+                                $(this).val()
+                            );
+
+                            column
+                                .search(val ? '^' + val + '$' : '', true, false)
+                                .draw();
+                        });
+
+                    column.data().unique().sort().each(function(d, j) {
+                        select.append('<option value="' + d + '">' + d + '</option>')
+                    });
+                });
+            }
+        });
+        table.on('draw.dt', function() {
+            PageFunction.DrawTable();
+        });
     }
 
-    function buildBooksTable(array) {
-        bookTableObj.setAttribute('border', '1');
-        bookTableObj.setAttribute('id', 'BooksTable');
-        let tableHTML = '<thead><tr>';
-        tableHTML += `
-        <th> Name </th>
-        <th> Genre </th>
-        <th> Author </th>
-        <th> IsHasCD </th>
-        <th> IsHasDVD </th>
-        <th> PublishingHouse </th>
-        <th> Delete </th>
-        <th> Info </th>
-        <th> Edit </th>
-        </tr></thead>`;
-        for (let i = 0; i < array.length; i++) {
-            tableHTML += `<tr>
-                <td> ${array[i].Name}</td>
-                <td> ${array[i].Genre}</td>
-                <td> ${array[i].Author}</td>
-                <td> ${array[i].IsHasCD}</td>
-                <td> ${array[i].IsHasDVD}</td>
-                <td> ${array[i].PublishingHouse}</td>
-                <td><button class="delTableBtn" value="${array[i].id}">Delete</button></td>
-                <td><button class="infoTableBtn" value="${array[i].id}">Info</button></td>
-                <td><button class="editTableBtn" value="${array[i].id}">Edit</button></td>
-                </tr>`;
-        }
-        bookTableObj.innerHTML = tableHTML;
-        document.getElementById(divId).appendChild(bookTableObj);
+    function updateTable() {
+        table.dataTable().api().ajax.reload();
     }
 
     function buildDetailTable(book) {
         let proxy = Models.ProxyExample(book);
-        console.log(proxy.GetInfo());
-        detailTableObj.setAttribute('border', '1');
-        detailTableObj.setAttribute('id', 'DetailTable');
-        let tableHTML = '<caption>Detail</caption>';
+        let tableHTML;
         for (let key in proxy) {
             if (key == 'id' || key == 'type') {} else {
                 tableHTML += `<tr><td>${key}</td><td>${proxy[key]}</td></tr>`;
             }
         }
-        detailTableObj.innerHTML = tableHTML;
-        document.getElementById(divId).appendChild(detailTableObj);
+        $('#infoTable').append(`<table id='detailTable' class='table'>`);
+        $('#detailTable').append(tableHTML);
     }
 
     return {
-        InitTableBuilder: function(containerId) {
-            initTableBuilder(containerId);
-        },
-        CreateTable: function(bookArray) {
-            buildBooksTable(bookArray);
+        InitTable: function(tableHtmlId) {
+            initTable(tableHtmlId);
         },
         CreateDetailTable: function(book) {
             buildDetailTable(book);
+        },
+        UpdateTable: function() {
+            updateTable();
         }
     }
 })();
