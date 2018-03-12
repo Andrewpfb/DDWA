@@ -6,8 +6,7 @@ const CleanWebpackPlugin = require('clean-webpack-plugin');
 module.exports = {
     context: path.resolve(__dirname, 'src'),
     entry: {
-        bundle: ['babel-polyfill', './js/interface.js'],
-        worker: './js/worker.js'
+        bundle: ['babel-polyfill', './js/interface.js']
     },
     output: {
         filename: '[name].js',
@@ -28,10 +27,6 @@ module.exports = {
     ],
     module: {
         rules: [{
-                test: /\.worker\.js$/,
-                use: { loader: 'worker-loader' }
-            },
-            {
                 test: /\.js$/,
                 exclude: /(node_modules)/,
                 loader: 'babel-loader',

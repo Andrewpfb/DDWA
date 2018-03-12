@@ -1,13 +1,13 @@
-onmessage = function(e) {
+export function bookWorker(e) {
     let delay = setTimeout(function() {
         GetCount();
         let timer = setInterval(function() {
             GetCount();
         }, 60000);
-    }, e.data)
+    }, e.data);
 };
 
-async function GetCount() {
+export async function GetCount() {
     const options = {
         method: 'get'
     }
