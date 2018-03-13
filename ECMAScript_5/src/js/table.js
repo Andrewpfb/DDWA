@@ -45,14 +45,14 @@ const TableBuilder = (function() {
     }
 
     function buildDetailTable(book) {
-        let proxy = Models.ProxyExample(book);
-        console.log(proxy.GetInfo());
+        //let proxy = Models.ProxyExample(book);
+        console.log(book.GetInfo());
         detailTableObj.setAttribute('border', '1');
         detailTableObj.setAttribute('id', 'DetailTable');
         let tableHTML = '<caption>Detail</caption>';
-        for (let key in proxy) {
+        for (let key in book) {
             if (key == 'id' || key == 'type') {} else {
-                tableHTML += `<tr><td>${key}</td><td>${proxy[key]}</td></tr>`;
+                tableHTML += `<tr><td>${key}</td><td>${book[key]}</td></tr>`;
             }
         }
         detailTableObj.innerHTML = tableHTML;

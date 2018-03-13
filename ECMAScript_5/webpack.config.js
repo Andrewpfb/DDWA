@@ -15,7 +15,7 @@ module.exports = {
     watch: true,
     devtool: 'source-map',
     plugins: [
-        new webpack.HotModuleReplacementPlugin(),
+        //new webpack.HotModuleReplacementPlugin(),
         new CleanWebpackPlugin(['dist']),
         new HtmlWebpackPlugin({
             hash: true,

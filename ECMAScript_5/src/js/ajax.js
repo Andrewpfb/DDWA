@@ -3,6 +3,9 @@ import PageFunction from './pageFunction.js';
 import GLOBAL_CONST from './global.js';
 import Models from './models.js';
 
+require('es6-promise').polyfill();
+require('isomorphic-fetch');
+
 const AjaxHelper = (function() {
     let url, bookArray;
 

@@ -30,10 +30,12 @@ const PageFunction = (function() {
         var icon = new Image();
         icon.src = Icon;
         icon.height = 50;
+        icon.width = 100;
         document.getElementById('logo').appendChild(icon);
         var banner = new Image();
         banner.src = Icon;
         banner.width = 260;
+        banner.height = 100;
         document.getElementById('banner').appendChild(banner);
         drawTable();
     };
