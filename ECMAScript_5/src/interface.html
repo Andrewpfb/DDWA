@@ -52,15 +52,15 @@
                 </div>
                 <div class="form-group">
                     <label for="bookName">Name: </label>
-                    <input class="form-control name" type="text" id="bookName" />
+                    <input class="form-control name" type="text" name="bookName" id="bookName" />
                 </div>
                 <div class="form-group">
                     <label for="bookGenre">Genre: </label>
-                    <input class="form-control onlyText" type="text" id="bookGenre" />
+                    <input class="form-control text" type="text" name="bookGenre" id="bookGenre" />
                 </div>
                 <div class="form-group">
                     <label for="bookAuthor">Author: </label>
-                    <input class="form-control onlyText" type="text" id="bookAuthor" />
+                    <input class="form-control text" type="text" name="bookAuthor" id="bookAuthor" />
                 </div>
                 <div class="form-check">
                     <input class="form-check-input" type="checkbox" id="bookCD" />
@@ -72,26 +72,26 @@
                 </div>
                 <div class="form-group">
                     <label for="bookPublHouse">Publishing house: </label>
-                    <input class="form-control onlyText" type="text" id="bookPublHouse" />
+                    <input class="form-control text" type="text" name="bookPublHouse" id="bookPublHouse" />
                 </div>
                 <div id="forAudio">
                     <div class="form-group">
                         <label for="bookDuration">Duration: </label>
-                        <input class="form-control" type="number" id="bookDuration" max="1000" pattern="^[0-9]" />
+                        <input class="form-control number" type="number" name="bookDuration" id="bookDuration"/>
                     </div>
                     <div class="form-group">
                         <label for="bookSize">Size: </label>
-                        <input class="form-control" type="number" id="bookSize" max="3000" pattern="^[0-9]+" />
+                        <input class="form-control number" type="number" name="bookSize" id="bookSize"/>
                     </div>
                 </div>
                 <div id="forSchool" style="display:none">
                     <div class="form-group">
                         <label for="bookPageCount">Page count: </label>
-                        <input class="form-control" type="number" id="bookPageCount" max="2000" pattern="^[0-9]+" />
+                        <input class="form-control number" type="number" name="bookPageCount" id="bookPageCount"/>
                     </div>
                     <div class="form-group">
                         <label for="bookCoverType">Cover type: </label>
-                        <input class="form-control" type="text" id="bookCoverType" />
+                        <input class="form-control text" type="text" name="bookCoverType" id="bookCoverType" />
                     </div>
                 </div>
                 <div class="form-group">

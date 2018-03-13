@@ -5,23 +5,45 @@ import TableBuilder from './table.js';
 import GLOBAL_CONST from './global.js';
 import Models from './models.js';
 
+$(function () {
+    jQuery.validator.addMethod(
+        'regexp',
+        function(value, element, regexp) {
+            var re = new RegExp(regexp);
+            return this.optional(element) || re.test(value);
+        },
+        "Please check your input."
+    );
+    jQuery.validator.addClassRules({
+        name: {
+            required: true,
+            regexp: '^[а-яА-ЯёЁa-zA-Z0-9]+'
+        },
+        text: {
+            required: true,
+            regexp: '^[а-яА-ЯёЁa-zA-Z]+'
+        },
+        number:{
+            required:true,
+            regexp: '^[0-9]+',
+            min: 1,
+            maxlength:3000
+        }
+    });
+    $('#bookForm').validate({
+        submitHandler: function() {
+            alert('ok');
+        }
+    });
+});
+
 const PageFunction = (function() {
     let isEdit = false;
     let select;
 
     function initPage() {
         debugger;
-        $('#bookForm').validate({
-            submitHandler: function() {
-                alert('ok');
-            },
-            // rules: {
-            //     bookName: {
-            //         required: true,
-            //         regexp: '^[а-яА-ЯёЁa-zA-Z0-9]+'
-            //     }
-            // }
-        });
+        
         AjaxHelper.InitAjax(GLOBAL_CONST.URL);
         TableBuilder.InitTable('BooksTable');
         select = $('#selectTypeBook');
@@ -33,24 +55,6 @@ const PageFunction = (function() {
         banner.src = Icon;
         banner.width = 260;
         $('#banner').append(banner);
-        $.validator.addMethod(
-            'regexp',
-            function(value, element, regexp) {
-                var re = new RegExp(regexp);
-                return this.optional(element) || re.test(value);
-            },
-            "Please check your input."
-        );
-        $.validator.addClassRules({
-            name: {
-                required: true,
-                regexp: '^[а-яА-ЯёЁa-zA-Z0-9]+'
-            },
-            onlyText: {
-                required: true,
-                regexp: '^[а-яА-ЯёЁa-zA-Z]+'
-            }
-        });
     };
 
     function setHandler() {
