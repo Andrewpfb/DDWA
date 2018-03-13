@@ -27,6 +27,7 @@
         "datatables.net-bs4": "^1.10.16",
         "file-loader": "^1.1.11",
         "html-webpack-plugin": "^3.0.6",
+        "include-replace-webpack-plugin": "^1.0.1",
         "jquery": "^3.3.1",
         "jquery-validation": "^1.17.0",
         "postcss-loader": "^2.1.1",

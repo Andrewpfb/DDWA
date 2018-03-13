@@ -2,6 +2,7 @@ const path = require('path');
 const webpack = require('webpack');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 const CleanWebpackPlugin = require('clean-webpack-plugin');
+const IncludeReplaceWebpackPlugin = require('include-replace-webpack-plugin');
 
 module.exports = {
     mode: process.env.NODE_ENV || 'development',
@@ -22,7 +23,11 @@ module.exports = {
             jQuery: 'jquery',
             dt: 'datatables.net'
         }),
-        new webpack.HotModuleReplacementPlugin(),
+        // new webpack.HotModuleReplacementPlugin(),
+        new IncludeReplaceWebpackPlugin({
+            src: './src',
+            dist: './dist'
+        }),
         new CleanWebpackPlugin(['dist']),
         new HtmlWebpackPlugin({
             hash: true,
@@ -72,7 +77,7 @@ module.exports = {
         compress: false,
         port: 9000,
         historyApiFallback: true,
-        hot: true,
+        hot: false,
         host: '127.0.0.1'
     }
 };
