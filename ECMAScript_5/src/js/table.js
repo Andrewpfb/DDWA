@@ -70,6 +70,7 @@ const TableBuilder = (function() {
                 tableHTML += `<tr><td>${key}</td><td>${proxy[key]}</td></tr>`;
             }
         }
+        $('#infoTable').empty();
         $('#infoTable').append(`<table id='detailTable' class='table'>`);
         $('#detailTable').append(tableHTML);
     }
