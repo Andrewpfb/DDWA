@@ -1,13 +1,17 @@
 import '../css/style.css';
-import '../../node_modules/bootstrap/dist/css/bootstrap.min.css';
-import '../../node_modules/jquery-validation/dist/jquery.validate.min';
-import '../../node_modules/datatables.net-bs4/css/dataTables.bootstrap4.css';
-import '../../node_modules/tempusdominus-bootstrap-4/build/css/tempusdominus-bootstrap-4.min.css';
+import 'bootstrap/dist/css/bootstrap.min.css';
+import 'jquery-validation/dist/jquery.validate.min';
+import 'datatables.net-bs4/css/dataTables.bootstrap4.css';
+import 'tempusdominus-bootstrap-4/build/css/tempusdominus-bootstrap-4.min.css';
 
 import PageFunction from './pageFunction.js';
 
-require('../../node_modules/datatables.net');
-require('../../node_modules/datatables.net-bs4');
+require('font-awesome/css/font-awesome.css');
+require('datatables.net');
+require('datatables.net-bs4');
+require('tempusdominus-bootstrap-4');
+var Promise = require('bluebird');
+
 
 window.onload = function() {
     PageFunction.InitPage();

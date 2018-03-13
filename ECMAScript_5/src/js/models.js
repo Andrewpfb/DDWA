@@ -1,7 +1,7 @@
 const Models = (function() {
     class Book {
         constructor(initArray) {
-            let { id, Name, Genre, Author, IsHasCD, IsHasDVD, PublishingHouse, Type } = initArray;
+            let { id, Name, Genre, Author, IsHasCD, IsHasDVD, PublishingHouse, Type, PublishingYear } = initArray;
             this.id = id;
             this.name = Name;
             this.genre = Genre;
@@ -10,6 +10,7 @@ const Models = (function() {
             this.isHasDVD = IsHasDVD;
             this.publishingHouse = PublishingHouse;
             this.type = Type;
+            this.publishingYear = PublishingYear;
         }
 
         [Symbol.iterator]() {
@@ -108,6 +109,14 @@ const Models = (function() {
                 throw `Variable isn't a string`;
             }
         };
+
+        // publishingYear get/set.
+        get PublishingYear(){
+            return this.publishingYear;
+        }
+        set PublishingYear(publishingYear){
+            this.publishingYear = publishingYear;
+        }
 
         GetInfo() {
             return `

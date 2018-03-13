@@ -3,6 +3,9 @@ import PageFunction from './pageFunction.js';
 import GLOBAL_CONST from './global.js';
 import Models from './models.js';
 
+require('es6-promise').polyfill();
+require('isomorphic-fetch');
+
 const AjaxHelper = (function() {
     let url;
 
@@ -35,7 +38,6 @@ const AjaxHelper = (function() {
         try {
             const response = await fetch(path, options);
             const bookFromServer = await response.json();
-
             if (bookFromServer.Type == GLOBAL_CONST.AUDIO_TYPE) {
                 book = Models.CreateAudioBook(bookFromServer);
             } else if (bookFromServer.Type == GLOBAL_CONST.SCHOOL_TYPE) {

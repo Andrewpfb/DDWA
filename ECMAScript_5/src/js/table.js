@@ -54,7 +54,7 @@ const TableBuilder = (function() {
             }
         });
         table.on('draw.dt', function() {
-            PageFunction.DrawTable();
+            PageFunction.SetHandler();
         });
     }
 
@@ -63,11 +63,10 @@ const TableBuilder = (function() {
     }
 
     function buildDetailTable(book) {
-        let proxy = Models.ProxyExample(book);
         let tableHTML;
-        for (let key in proxy) {
+        for (let key in book) {
             if (key == 'id' || key == 'type') {} else {
-                tableHTML += `<tr><td>${key}</td><td>${proxy[key]}</td></tr>`;
+                tableHTML += `<tr><td>${key}</td><td>${book[key]}</td></tr>`;
             }
         }
         $('#infoTable').empty();

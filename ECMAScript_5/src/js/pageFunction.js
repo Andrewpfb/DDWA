@@ -5,87 +5,90 @@ import TableBuilder from './table.js';
 import GLOBAL_CONST from './global.js';
 import Models from './models.js';
 
-$(function () {
-    jQuery.validator.addMethod(
-        'regexp',
-        function(value, element, regexp) {
-            var re = new RegExp(regexp);
-            return this.optional(element) || re.test(value);
-        },
-        "Please check your input."
-    );
-    jQuery.validator.addClassRules({
-        name: {
-            required: true,
-            regexp: '^[а-яА-ЯёЁa-zA-Z0-9]+'
-        },
-        text: {
-            required: true,
-            regexp: '^[а-яА-ЯёЁa-zA-Z]+'
-        },
-        number:{
-            required:true,
-            regexp: '^[0-9]+',
-            min: 1,
-            maxlength:3000
-        }
-    });
-    $('#bookForm').validate({
-        submitHandler: function() {
-            alert('ok');
-        }
-    });
-});
-
-const PageFunction = (function() {
+const PageFunction = (function () {
     let isEdit = false;
     let select;
 
     function initPage() {
-        debugger;
-        
+        $('#datetimepicker4').datetimepicker({
+            format: 'L'
+        });
+        setValidate();
         AjaxHelper.InitAjax(GLOBAL_CONST.URL);
         TableBuilder.InitTable('BooksTable');
         select = $('#selectTypeBook');
+        setImage();
+    };
+
+    function setValidate() {
+        jQuery.validator.addMethod(
+            'regexp',
+            function (value, element, regexp) {
+                var re = new RegExp(regexp);
+                return this.optional(element) || re.test(value);
+            },
+            "Please check your input."
+        );
+        jQuery.validator.addClassRules({
+            name: {
+                required: true,
+                regexp: '^[а-яА-ЯёЁa-zA-Z0-9]+'
+            },
+            text: {
+                required: true,
+                regexp: '^[а-яА-ЯёЁa-zA-Z]+'
+            },
+            number: {
+                required: true,
+                regexp: '^[0-9]+',
+                min: 1,
+                maxlength: 3000
+            },
+            date: {
+                required: true
+            }
+        });
+        $('#bookForm').validate({
+            submitHandler: function (event) {
+                saveBook();
+            }
+        });
+    };
+
+    function setHandler() {
+        $('#selectTypeBook').change(function () {
+            changeBookTypeByForm();
+        });
+        $('#createBookFormBtn').click(function () {
+            showCreateForm();
+        });
+        $('.infoTableBtn').click(function (event) {
+            getInfo(event.currentTarget.value);
+        });
+        $('.delTableBtn').click(function (event) {
+            deleteBook(event.currentTarget.value);
+        });
+        $('.editTableBtn').click(function (event) {
+            editBook(event.currentTarget.value);
+        });
+    };
+
+   function setImage() {
         var icon = new Image();
         icon.src = Icon;
         icon.height = 50;
+        icon.width = 100;
         $('#logo').append(icon);
         var banner = new Image();
         banner.src = Icon;
         banner.width = 260;
+        banner.height = 100;
         $('#banner').append(banner);
     };
 
-    function setHandler() {
-        // $('#bookForm').submit(function(event) {
-        //     event.preventDefault();
-        //     event.stopImmediatePropagation();
-        //     saveBook();
-        // });
-        $('#selectTypeBook').change(function() {
-            changeBookTypeByForm();
-        });
-        $('#searchBtn').click(function() {
-            search();
-        });
-        $('#createBookFormBtn').click(function() {
-            showCreateForm();
-        });
-        $('.infoTableBtn').click(function(event) {
-            getInfo(event.currentTarget.value);
-        });
-        $('.delTableBtn').click(function(event) {
-            deleteBook(event.currentTarget.value);
-        });
-        $('.editTableBtn').click(function(event) {
-            editBook(event.currentTarget.value);
-        });
-    }
-
     function getInfo(id) {
         const promiseBook = AjaxHelper.GetBookInfoById(id);
-        promiseBook.then(function(book) {
+        promiseBook.then(function (book) {
             if (book) {
                 if (book.Type == GLOBAL_CONST.AUDIO_TYPE) {
                     TableBuilder.CreateDetailTable(Models.CreateAudioBook(book));
@@ -105,7 +108,7 @@ const PageFunction = (function() {
     function editBook(id) {
         const promiseBook = AjaxHelper.GetBookInfoById(id);
         promiseBook
-            .then(function(book) {
+            .then(function (book) {
                 if (book) {
                     isEdit = true;
                     setSelectValue(book.Type);
@@ -120,6 +123,7 @@ const PageFunction = (function() {
                     $('#bookSize').val(book.Size);
                     $('#bookPageCount').val(book.PageCount);
                     $('#bookCoverType').val(book.CoverType);
+                    $('#bookPublicationYear').val(book.PublishingYear);
                     showCreateForm();
                 } else {
                     console.log(`Error, book doesn't found`);
@@ -140,6 +144,7 @@ const PageFunction = (function() {
             Size: $('#bookSize').val(),
             PageCount: $('#bookPageCount').val(),
             CoverType: $('#bookCoverType').val(),
+            PublishingYear: $('#bookPublicationYear').val()
         };
         if (isEdit == true) {
             isEdit = false;
@@ -177,28 +182,28 @@ const PageFunction = (function() {
     };
 
     return {
-        InitPage: function() {
+        InitPage: function () {
             initPage();
         },
-        GetInfo: function(id) {
+        GetInfo: function (id) {
             getInfo(id);
         },
-        DeleteBook: function(id) {
+        DeleteBook: function (id) {
             deleteBook(id);
         },
-        EditBook: function(id) {
+        EditBook: function (id) {
             editBook(id);
         },
-        SaveBook: function() {
+        SaveBook: function () {
             saveBook();
         },
-        ShowCreateForm: function() {
+        ShowCreateForm: function () {
             showCreateForm();
         },
-        ChangeBookTypeByForm: function() {
+        ChangeBookTypeByForm: function () {
             changeBookTypeByForm();
         },
-        DrawTable() {
+        SetHandler() {
             setHandler();
         }
     }

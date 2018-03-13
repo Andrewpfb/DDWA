@@ -77,21 +77,32 @@
                 <div id="forAudio">
                     <div class="form-group">
                         <label for="bookDuration">Duration: </label>
-                        <input class="form-control number" type="number" name="bookDuration" id="bookDuration"/>
+                        <input class="form-control number" type="number" name="bookDuration" id="bookDuration" />
                     </div>
                     <div class="form-group">
                         <label for="bookSize">Size: </label>
-                        <input class="form-control number" type="number" name="bookSize" id="bookSize"/>
+                        <input class="form-control number" type="number" name="bookSize" id="bookSize" />
                     </div>
                 </div>
                 <div id="forSchool" style="display:none">
                     <div class="form-group">
                         <label for="bookPageCount">Page count: </label>
-                        <input class="form-control number" type="number" name="bookPageCount" id="bookPageCount"/>
+                        <input class="form-control number" type="number" name="bookPageCount" id="bookPageCount" />
                     </div>
                     <div class="form-group">
                         <label for="bookCoverType">Cover type: </label>
                         <input class="form-control text" type="text" name="bookCoverType" id="bookCoverType" />
+                    </div>
+                </div>
+                <div class="form-group">
+                        <label for="bookPublicationYear">Year of publication</label>
+                    <div class="input-group date" id="datetimepicker4" data-target-input="nearest">
+                        <input type="text" id="bookPublicationYear" name="bookPublicationYear" class="form-control datetimepicker-input date" data-target="#datetimepicker4" />
+                        <div class="input-group-append" data-target="#datetimepicker4" data-toggle="datetimepicker">
+                            <div class="input-group-text">
+                                <i class="navbar-toggler-icon"></i>
+                            </div>
+                        </div>
                     </div>
                 </div>
                 <div class="form-group">
@@ -105,7 +116,8 @@
     </div>
 
     <div class="m-4" id="workerDiv">
-        <label>Object count:</label><input type="text" id="count"></input>
+        <label>Object count:</label>
+        <input type="text" id="count"></input>
     </div>
 
     <div class="navbar-fixed-bottom m-4" id="banner"></div>
