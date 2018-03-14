@@ -5,18 +5,20 @@ export function bookWorker(e) {
             GetCount();
         }, 60000);
     }, e.data);
-};
 
-export async function GetCount() {
-    const options = {
-        method: 'get'
+    function GetCount() {
+        oReq = new XMLHttpRequest();
+        oReq.open('get', 'http://localhost:2403/books', true);
+        oReq.send();
+        oReq.onreadystatechange = function() {
+            if (oReq.readyState != 4) {
+                return
+            }
+            if (oReq.status != 200) {
+                console.log('Error: ' + oReq.status + ':' + oReq.statusText);
+            } else {
+                postMessage(JSON.parse(oReq.response).length);
+            }
+        }
     }
-    try {
-        const response = await fetch('http://localhost:2403/books', options);
-        const array = await response.json();
-        postMessage(array.length);
-    } catch (err) {
-        debugger;
-        postMessage(err);
-    }
-}
+};
